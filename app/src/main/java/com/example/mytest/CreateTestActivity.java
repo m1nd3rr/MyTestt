@@ -121,13 +121,38 @@ public class CreateTestActivity extends AppCompatActivity {
         finish();
     }
 
+    private String generateRoomNumber() {
+        // Генерация уникального номера комнаты
+        return String.valueOf(System.currentTimeMillis()).substring(8); // Возвращает последние 5 символов текущего времени
+    }
+
+
 
     public void ClickOnRoom(View view) {
+        // Получение текущего теста
+        Test currentTest = Select.getTest();
+        if (currentTest == null) {
+            Toast.makeText(this, "Тест не выбран.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Создание новой комнаты
         Room room = new Room();
-        room.setTestId(Select.getTest().getId());
+        room.setTestId(currentTest.getId()); // Установка ID теста
+        room.setTestName(currentTest.getTitle()); // Установка названия теста
+        room.setRoomNumber(generateRoomNumber()); // Генерация кода комнаты
+
+
+        // Добавление комнаты в базу данных
         roomRepository.addRoom(room);
-        Toast.makeText(this, room.getRoomNumber(), Toast.LENGTH_LONG).show();
+
+        // Передача данных в RoomCodeActivity
+        Intent intent = new Intent(this, RoomCodeActivity.class);
+        intent.putExtra("ROOM_CODE", room.getRoomNumber());
+        intent.putExtra("TEST_NAME", room.getTestName());
+        startActivity(intent);
     }
+
 
 
 }

@@ -1,5 +1,7 @@
 package com.example.mytest;
 
+import static com.example.mytest.auth.Authentication.getTeacher;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,10 +60,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setCreateTest();
 
         TextView textView = findViewById(R.id.userName);
-        textView.setText(Authentication.getTeacher().getFirstName());
+        textView.setText(getTeacher().getFirstName());
         ImageView photoUser = findViewById(R.id.profile_image_teacher);
-        if (Authentication.getTeacher().getPhoto() != null) {
-            Glide.with(this).load(Authentication.getTeacher().getPhoto()).apply(new RequestOptions()
+        if (getTeacher().getPhoto() != null) {
+            Glide.with(this).load(getTeacher().getPhoto()).apply(new RequestOptions()
                     .centerCrop()
                     .circleCrop()).into(photoUser);
         }
@@ -76,14 +79,14 @@ public class TeacherProfileActivity extends AppCompatActivity {
                                     .centerCrop()
                                     .circleCrop()).into(photo);
 
-                            String userId = Authentication.getTeacher().getId();
+                            String userId = getTeacher().getId();
                             CloudinaryUploader uploader = new CloudinaryUploader(this);
                             uploader.uploadImage(imageUri, userId, new CloudinaryUploader.UploadCallback() {
                                 @Override
                                 public void onUploadComplete(String imageUrl) {
                                     if (imageUrl != null) {
-                                        Authentication.getTeacher().setPhoto(imageUrl);
-                                        teacherRepository.updateTeacher(Authentication.getTeacher());
+                                        getTeacher().setPhoto(imageUrl);
+                                        teacherRepository.updateTeacher(getTeacher());
                                     }
                                 }
                             });
@@ -95,7 +98,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
     public void ClickOnCreateTest(View view) {
         Test test = new Test();
-        test.setTeacherId(Authentication.getTeacher().getId());
+        test.setTeacherId(getTeacher().getId());
         Intent intent = new Intent(this, CreateTestActivity.class);
         Select.setTest(testRepository.addTest(test));
         startActivity(intent);
@@ -107,11 +110,15 @@ public class TeacherProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void setCreateTest(){
-        TextView textView = findViewById(R.id.createTest);
-        testRepository.getAllTestByTeacherId(Authentication.teacher.getId()).thenAccept(list ->{
-            textView.setText(String.valueOf(list.size()));
-        });
+    private void setCreateTest() {
+        Teacher teacher = getTeacher(); // Метод, который должен вернуть текущего учителя
+        if (teacher != null) {
+            String teacherId = teacher.getId();
+            // Дальше продолжайте логику
+        } else {
+            Log.e("TeacherProfileActivity", "Teacher object is null, cannot create test.");
+            // Обработайте ошибку
+        }
     }
 
     public void onClickOpenGallery(View view) {
@@ -160,7 +167,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
             throw new IllegalStateException("Ошибка в макете диалога: элемент не найден.");
         }
 
-        Teacher currentTeacher = Authentication.getTeacher();
+        Teacher currentTeacher = getTeacher();
         editFirstName.setText(currentTeacher.getFirstName());
         editLastName.setText(currentTeacher.getLastName());
         editPassword.setText(currentTeacher.getPassword());
@@ -217,6 +224,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             userName.setText(currentTeacher.getFirstName());
             dialog.dismiss();
         });
+    }
+
+    public void ClickOnRoomHistory(View view) {
+        Intent intent = new Intent(this, RoomHistoryActivity.class);
+        startActivity(intent);
     }
 
     public void onBack(View view) {

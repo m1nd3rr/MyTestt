@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -102,6 +101,7 @@ public class PassingTestActivity extends AppCompatActivity {
         if (result) {
             rightAnswer++;
         }
+
         if (i < questionList.size() - 1) {
             i++;
             startPassing();
@@ -110,13 +110,7 @@ public class PassingTestActivity extends AppCompatActivity {
             int wrongAnswers = totalQuestions - rightAnswer;
             showResultsDialog(rightAnswer, wrongAnswers);
 
-            Result resultAll = new Result();
-            resultAll.setUserId(Authentication.student.getId());
-            resultAll.setTestId(Select.getTest().getId());
-            resultAll.setCountAnswer(questionList.size());
-            resultAll.setCorrectAnswer(rightAnswer);
-            ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
-            resultRepository.addResult(resultAll);
+            onTestCompleted();
         }
     }
 
@@ -132,6 +126,17 @@ public class PassingTestActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .show();
     }
+    private void onTestCompleted() {
+        ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
+        Result resultAll = new Result();
+        resultAll.setUserId(Authentication.student.getId());
+        resultAll.setTestId(Select.getTest().getId());
+        resultAll.setCountAnswer(questionList.size());
+        resultAll.setCorrectAnswer(rightAnswer);
+        resultAll.setCompleted(true); // Установите в true, если тест завершен
+
+        resultRepository.addResult(resultAll);
+    }
     public void backButton(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Подтверждение выхода")
@@ -144,5 +149,6 @@ public class PassingTestActivity extends AppCompatActivity {
                 .setNegativeButton("Остаться", (dialog, which) -> dialog.dismiss())
                 .show();
     }
+
 
 }

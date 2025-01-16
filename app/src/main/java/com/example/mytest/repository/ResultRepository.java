@@ -1,24 +1,26 @@
 package com.example.mytest.repository;
 
+import android.util.Log;
 import android.util.Pair;
 
-import com.example.mytest.model.Answer;
 import com.example.mytest.model.Result;
-import com.example.mytest.model.Test;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ResultRepository {
     private final CollectionReference resultCollection;
-
-    public ResultRepository(FirebaseFirestore db){
+    public ResultRepository(FirebaseFirestore db) {
         resultCollection = db.collection("result");
     }
 
@@ -26,8 +28,8 @@ public class ResultRepository {
         String resultId = resultCollection.document().getId();
         result.setId(resultId);
         result.setTime(Timestamp.now());
+        result.setCompleted(true);
         resultCollection.document(resultId).set(result);
-
         return result;
     }
 
@@ -63,4 +65,63 @@ public class ResultRepository {
 
         return future;
     }
+
+    public ListenerRegistration getResultsByTestId(String testId, EventListener<QuerySnapshot> listener) {
+        return resultCollection.whereEqualTo("testId", testId)
+                .addSnapshotListener(listener);
+    }
+    public CompletableFuture<List<Result>> getResultsByRoomId(String roomId) {
+        CompletableFuture<List<Result>> future = new CompletableFuture<>();
+        List<Result> resultList = new ArrayList<>();
+
+        resultCollection.whereEqualTo("roomId", roomId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Result result = document.toObject(Result.class);
+                    resultList.add(result);
+                }
+                future.complete(resultList);
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+
+        return future;
+    }
+    public void saveOrUpdateResult(Result result) {
+        resultCollection.whereEqualTo("userId", result.getUserId())
+                .whereEqualTo("testId", result.getTestId())
+// .whereEqualTo("roomId", result.getRoomId())
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+// Результат уже существует, обновляем
+                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                        Result existingResult = document.toObject(Result.class);
+                        existingResult.setCorrectAnswer(result.getCorrectAnswer());
+                        existingResult.setCountAnswer(result.getCountAnswer());
+                        resultCollection.document(document.getId()).set(existingResult)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("ResultRepository", "Result updated successfully.");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("ResultRepository", "Error updating result: ", e);
+                                });
+                    } else {
+                        // Если результат не найден, создаем новый
+                        resultCollection.add(result)
+                                .addOnSuccessListener(documentReference -> {
+                                    Log.d("ResultRepository", "New result added successfully.");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("ResultRepository", "Error adding new result: ", e);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ResultRepository", "Error checking for existing results: ", e);
+                });
+    }
+
+
 }

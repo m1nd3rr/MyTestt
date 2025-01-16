@@ -9,17 +9,31 @@ public class Result {
     private int correctAnswer;
     private Timestamp time;
     private int countAnswer;
+    private String roomId;
+    private Student student;
+    private boolean  isCompleted;
 
-    public Result(String id, String userId, String testId, int correctAnswer, Timestamp time, int countAnswer) {
+    public Result(String id, String userId, String testId, int correctAnswer, Timestamp time, int countAnswer, String roomId, Student student, boolean isCompleted) {
         this.id = id;
         this.userId = userId;
         this.testId = testId;
         this.correctAnswer = correctAnswer;
         this.time = time;
         this.countAnswer = countAnswer;
+        this.roomId = roomId;
+        this.student = student;
+        this.isCompleted = isCompleted;
     }
 
     public Result() {
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 
     public String getUserId() {
@@ -68,5 +82,21 @@ public class Result {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

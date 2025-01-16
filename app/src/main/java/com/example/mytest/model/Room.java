@@ -4,11 +4,15 @@ public class Room {
     private String id;
     private String testId;
     private String roomNumber;
+    private String teacherId;
+    private String testName;
 
-    public Room(String id, String testId, String roomNumber) {
+    public Room(String id, String testId, String roomNumber, String teacherId, String testName) {
         this.id = id;
         this.testId = testId;
         this.roomNumber = roomNumber;
+        this.teacherId = teacherId;
+        this.testName = testName;
     }
 
     public Room() {
@@ -37,6 +41,20 @@ public class Room {
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
+
+    public String getTeacherId() {
+        return teacherId;  // Геттер для teacherId
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;  // Сеттер для teacherId
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
 }
-
-

@@ -28,4 +28,11 @@ public class Authentication {
     public static Admin getAdmin() {return admin;}
 
     public static void setAdmin(Admin admin) {Authentication.admin = admin;}
+
+    public static String getTeacherId() {
+        if (teacher != null) {
+            return teacher.getId(); // Убедитесь, что в модели Teacher есть метод getId(), который возвращает ID
+        }
+        return null; // Если преподаватель не авторизован
+    }
 }
