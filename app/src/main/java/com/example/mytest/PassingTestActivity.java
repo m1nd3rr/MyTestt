@@ -34,6 +34,7 @@ public class PassingTestActivity extends AppCompatActivity {
     PassingAdapter passingAdapter;
     RecyclerView recyclerView;
     EditText text;
+    private Result resultAll;
 
     int i = 0;
     int rightAnswer = 0;
@@ -43,11 +44,22 @@ public class PassingTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_passing_test);
+
+
+
         answerRepository = new AnswerRepository(FirebaseFirestore.getInstance());
         questionRepository = new QuestionRepository(FirebaseFirestore.getInstance());
         questionRepository.getAllQuestionByTestId(Select.getTest().getId())
                 .thenAccept(list -> {
                     questionList.addAll(list);
+                    ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
+                    resultAll = new Result();
+                    resultAll.setUserId(Authentication.student.getId());
+                    resultAll.setTestId(Select.getTest().getId());
+                    resultAll.setCountAnswer(questionList.size());
+                    resultAll.setCompleted(false);
+
+                    resultAll=resultRepository.addResult(resultAll);
                     startPassing();
                 });
     }
@@ -57,6 +69,7 @@ public class PassingTestActivity extends AppCompatActivity {
         text = findViewById(R.id.text_question);
         TextView textView = findViewById(R.id.textPassing);
         textView.setText(questionList.get(i).getTitle());
+
 
         answerRepository.getAllAnswerById(questionList.get(i).getId())
                 .thenAccept(list -> {
@@ -128,14 +141,9 @@ public class PassingTestActivity extends AppCompatActivity {
     }
     private void onTestCompleted() {
         ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
-        Result resultAll = new Result();
-        resultAll.setUserId(Authentication.student.getId());
-        resultAll.setTestId(Select.getTest().getId());
-        resultAll.setCountAnswer(questionList.size());
         resultAll.setCorrectAnswer(rightAnswer);
-        resultAll.setCompleted(true); // Установите в true, если тест завершен
-
-        resultRepository.addResult(resultAll);
+        resultAll.setCompleted(true);
+        resultRepository.updateResult(resultAll);
     }
     public void backButton(View view) {
         new AlertDialog.Builder(this)

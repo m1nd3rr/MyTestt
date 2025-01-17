@@ -67,7 +67,7 @@ public class RoomCodeActivity extends AppCompatActivity {
                     return;
                 }
 
-                resultList.clear(); // Очистка списка перед обновлением
+                resultList.clear();
 
                 if (queryDocumentSnapshots != null) {
                     for (DocumentSnapshot document : queryDocumentSnapshots) {

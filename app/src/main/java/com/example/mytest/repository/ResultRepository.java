@@ -11,7 +11,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -31,6 +30,26 @@ public class ResultRepository {
         result.setCompleted(true);
         resultCollection.document(resultId).set(result);
         return result;
+    }
+    public CompletableFuture<Result> updateResult(Result result) {
+        CompletableFuture<Result> future = new CompletableFuture<>();
+
+        // Ensure the result has a valid ID
+        if (result.getId() == null || result.getId().isEmpty()) {
+            future.completeExceptionally(new IllegalArgumentException("Result ID cannot be null or empty"));
+            return future;
+        }
+
+        // Update the result document in Firestore
+        resultCollection.document(result.getId()).set(result).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                future.complete(result);
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+
+        return future;
     }
 
     public CompletableFuture<List<Result>> getAllResultByStudentId(String id) {
@@ -88,40 +107,7 @@ public class ResultRepository {
 
         return future;
     }
-    public void saveOrUpdateResult(Result result) {
-        resultCollection.whereEqualTo("userId", result.getUserId())
-                .whereEqualTo("testId", result.getTestId())
-// .whereEqualTo("roomId", result.getRoomId())
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-// Результат уже существует, обновляем
-                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-                        Result existingResult = document.toObject(Result.class);
-                        existingResult.setCorrectAnswer(result.getCorrectAnswer());
-                        existingResult.setCountAnswer(result.getCountAnswer());
-                        resultCollection.document(document.getId()).set(existingResult)
-                                .addOnSuccessListener(aVoid -> {
-                                    Log.d("ResultRepository", "Result updated successfully.");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e("ResultRepository", "Error updating result: ", e);
-                                });
-                    } else {
-                        // Если результат не найден, создаем новый
-                        resultCollection.add(result)
-                                .addOnSuccessListener(documentReference -> {
-                                    Log.d("ResultRepository", "New result added successfully.");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e("ResultRepository", "Error adding new result: ", e);
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("ResultRepository", "Error checking for existing results: ", e);
-                });
-    }
+
 
 
 }

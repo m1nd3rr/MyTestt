@@ -68,7 +68,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         setCreateTestUser();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-        TextView textView = findViewById(R.id.userName); // инициализация
+        TextView textView = findViewById(R.id.userName);
         TextView textView1 = findViewById(R.id.userGroup);
         textView1.setText(Authentication.getStudent().getGroupNumber());
         textView.setText(Authentication.getStudent().getFirstName());
