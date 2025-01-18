@@ -33,6 +33,7 @@ public class TestHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_history);
 
+        boolean isCompleteMode = getIntent().getBooleanExtra("isCompleteMode", false);
         RecyclerView recyclerView = findViewById(R.id.rvTestList);
         resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
         testRepository = new TestRepository(FirebaseFirestore.getInstance());
@@ -41,11 +42,11 @@ public class TestHistory extends AppCompatActivity {
         roomRepository = new RoomRepository(FirebaseFirestore.getInstance());
 
         if (Authentication.getStudent() != null) {
-            if(getIntent().getStringExtra("button").equals("complete")){
+            if(getIntent().getBooleanExtra("isCompleteMode", false)){
                 resultRepository.getAllResultByStudentId(Authentication.student.getId()).thenAccept(list ->{
                     testRepository.getAllTestByResult(list).thenAccept(listTest ->{
                         testList.addAll(listTest);
-                        TestAdapter testAdapter = new TestAdapter(testList, this);
+                        TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
                         recyclerView.setAdapter(testAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     });
@@ -54,7 +55,7 @@ public class TestHistory extends AppCompatActivity {
             else {
                 testRepository.getAllTestByStudentId(Authentication.student.getId()).thenAccept(list ->{
                     testList.addAll(list);
-                    TestAdapter testAdapter = new TestAdapter(testList, this);
+                    TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
                     recyclerView.setAdapter(testAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 });
@@ -63,7 +64,7 @@ public class TestHistory extends AppCompatActivity {
             testRepository.getAllTestByTeacherId(Authentication.getTeacher().getId())
                     .thenAccept(list -> {
                         testList.addAll(list);
-                        TestAdapter testAdapter = new TestAdapter(testList, this);
+                        TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
                         recyclerView.setAdapter(testAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     });
@@ -73,7 +74,7 @@ public class TestHistory extends AppCompatActivity {
     public void onBackButtonClickk(View view) {
         Intent intent;
         if(Authentication.getTeacher() != null){
-             intent = new Intent(this, TeacherProfileActivity.class);
+            intent = new Intent(this, TeacherProfileActivity.class);
         } else {
             intent = new Intent(this, StudentProfileActivity.class);
         }

@@ -342,15 +342,15 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     public void ClickShowCreateTest(View view) {
-      Intent intent = new Intent(this,TestHistory.class);
-      intent.putExtra("button", "create");
-      startActivity(intent);
-      finish();
+        Intent intent = new Intent(this,TestHistory.class);
+        intent.putExtra("isCompleteMode", false);
+        startActivity(intent);
+        finish();
     }
 
     public void ClickShowCompleteTest(View view) {
         Intent intent = new Intent(this,TestHistory.class);
-        intent.putExtra("button", "complete");
+        intent.putExtra("isCompleteMode", true);
         startActivity(intent);
         finish();
     }

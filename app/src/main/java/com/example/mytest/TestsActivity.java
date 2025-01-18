@@ -23,6 +23,7 @@ public class TestsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        boolean isCompleteMode = getIntent().getStringExtra("button").equals("complete");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -33,7 +34,7 @@ public class TestsActivity extends AppCompatActivity {
                     testList.addAll(list);
                     RecyclerView recyclerView = findViewById(R.id.recyclerViewTests);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    TestAdapter adapter = new TestAdapter(testList, this);
+                    TestAdapter adapter = new TestAdapter(testList, this, isCompleteMode);
                     recyclerView.setAdapter(adapter);
                 });
         bottomNavigationView.setOnItemSelectedListener(item -> {

@@ -44,6 +44,28 @@ public class QuestionRepository {
 
         return future;
     }
+    public CompletableFuture<List<Test>> getCompletedTests(String studentId) {
+        CompletableFuture<List<Test>> future = new CompletableFuture<>();
+        List<Test> completedTests = new ArrayList<>();
+
+        FirebaseFirestore.getInstance().collection("tests")
+                .whereEqualTo("isCompleted", true)
+                .whereEqualTo("studentId", studentId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Test test = document.toObject(Test.class);
+                            completedTests.add(test);
+                        }
+                        future.complete(completedTests);
+                    } else {
+                        future.completeExceptionally(task.getException());
+                    }
+                });
+
+        return future;
+    }
 
     public CompletableFuture<List<Question>> getAllQuestionByTestId(String id) {
         CompletableFuture<List<Question>> future = new CompletableFuture<>();

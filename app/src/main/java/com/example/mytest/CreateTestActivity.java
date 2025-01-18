@@ -44,7 +44,7 @@ public class CreateTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_test);
         test = Select.getTest();
-
+        boolean isCompleteMode = getIntent().getBooleanExtra("isCompleteMode", false);
 
         if (Authentication.getStudent() == null ) {
             findViewById(R.id.btnPublishTest).setVisibility(View.VISIBLE);
@@ -80,7 +80,7 @@ public class CreateTestActivity extends AppCompatActivity {
         questionRepository.getAllQuestionByTestId(test.getId())
                 .thenAccept(list -> {
                     questionList.addAll(list);
-                    questionAdapter = new QuestionAdapter(questionList,this);
+                    questionAdapter = new QuestionAdapter(questionList,this, isCompleteMode);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     recyclerView.setAdapter(questionAdapter);
                     questionAdapter.notifyItemInserted(list.size());

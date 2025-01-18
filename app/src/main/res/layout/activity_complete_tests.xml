@@ -20,20 +20,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-    android:id="@+id/etTestTitle"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:hint="Название теста"
-    android:inputType="text"
-    android:background="@drawable/edit_text_background"
-    android:maxLength="64"
-    android:padding="6dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="50dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp" />
+        android:id="@+id/etTestTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Название теста"
+        android:inputType="text"
+        android:background="@drawable/edit_text_background"
+        android:maxLength="64"
+        android:padding="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvQuestionsList"
         android:layout_width="0dp"
@@ -42,7 +42,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@id/btnCreateQuestion"
+        app:layout_constraintBottom_toTopOf="@id/btnCompleteTests"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,33 +50,19 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnCreateQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:backgroundTint="#3C599E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-        android:id="@+id/btnPublishTest"
+        android:id="@+id/btnCompleteTests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="ClickOnRoom"
-        android:text="Опубликовать тест"
+        android:text="Показать результаты"
         android:backgroundTint="#3C599E"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnCreateTest"
-        app:layout_constraintStart_toEndOf="@+id/btnCreateQuestion" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
-    <Button
-        android:backgroundTint="#3C599E"
-        android:id="@+id/btnCreateTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Обновить тест"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

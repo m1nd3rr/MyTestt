@@ -80,6 +80,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".RoomCodeActivity" />
         <activity android:name=".RoomHistoryActivity"/>
+        <activity android:name=".CompletedTestActivity" />
     </application>
 
 </manifest>

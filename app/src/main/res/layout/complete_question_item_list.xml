@@ -9,13 +9,13 @@
     android:id="@+id/question_item">
 
     <ImageView
-        android:id="@+id/notificationIcons"
+        android:id="@+id/notificationIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="end"
         android:src="@drawable/baseline_edit_24"
         android:layout_alignParentEnd="true"
-        android:visibility="visible" />
+        android:visibility="gone"
         />
 
     <TextView

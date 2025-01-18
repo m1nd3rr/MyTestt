@@ -6,20 +6,16 @@
     android:orientation="vertical"
     android:layout_margin="10dp"
     android:padding="15dp"
-    android:id="@+id/question_item">
+    android:id="@+id/test_item_list">
 
     <ImageView
-        android:id="@+id/notificationIcons"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="end"
-        android:src="@drawable/baseline_edit_24"
-        android:layout_alignParentEnd="true"
-        android:visibility="visible" />
-        />
+        android:id="@+id/notificationIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@+id/question_number"
+        android:id="@+id/test_number"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/background_number"
@@ -28,11 +24,11 @@
 
     </TextView>
 
-
     <TextView
-        android:id="@+id/question_title"
+        android:id="@+id/test_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Вопрос"
+        android:text="название теста"
         android:paddingHorizontal="10dp" />
+
 </LinearLayout>
