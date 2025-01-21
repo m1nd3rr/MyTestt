@@ -8,17 +8,21 @@ public class Answer {
     private int sortNumber;
     private String text;
 
+
     public Answer() {
     }
 
-    public Answer(String id, String content, Boolean correct, String questionId, int sortNumber, String text) {
+    public Answer(String id, String content, boolean correct, String questionId, int sortNumber, String text) {
         this.id = id;
         this.content = content;
         this.correct = correct;
         this.questionId = questionId;
         this.sortNumber = sortNumber;
         this.text = text;
+
     }
+
+
 
     public String getId() {
         return id;

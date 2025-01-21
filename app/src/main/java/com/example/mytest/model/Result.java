@@ -2,7 +2,11 @@ package com.example.mytest.model;
 
 import com.google.firebase.Timestamp;
 
-public class Result {
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+public class Result implements Serializable {
     private String id;
     private String userId;
     private String testId;
@@ -12,8 +16,10 @@ public class Result {
     private String roomId;
     private Student student;
     private boolean  isCompleted;
+    private Map<String,Boolean> studentAnswers;
 
-    public Result(String id, String userId, String testId, int correctAnswer, Timestamp time, int countAnswer, String roomId, Student student, boolean isCompleted) {
+
+    public Result(String id, String userId, String testId, int correctAnswer, Timestamp time, int countAnswer, String roomId, Student student, boolean isCompleted, Map<String, Boolean> studentAnswers) {
         this.id = id;
         this.userId = userId;
         this.testId = testId;
@@ -23,6 +29,7 @@ public class Result {
         this.roomId = roomId;
         this.student = student;
         this.isCompleted = isCompleted;
+        this.studentAnswers = studentAnswers;
     }
 
     public Result() {
@@ -98,5 +105,13 @@ public class Result {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Map<String, Boolean> getStudentAnswers() {
+        return studentAnswers;
+    }
+
+    public void setStudentAnswers(Map<String, Boolean> studentAnswers) {
+        this.studentAnswers = studentAnswers;
     }
 }

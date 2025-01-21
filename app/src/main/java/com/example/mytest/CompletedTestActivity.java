@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mytest.adapter.QuestionAdapter;
 import com.example.mytest.auth.Select;
 import com.example.mytest.model.Question;
+import com.example.mytest.model.Result;
 import com.example.mytest.model.Test;
 import com.example.mytest.repository.QuestionRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,9 +56,28 @@ public class CompletedTestActivity extends AppCompatActivity {
     }
 
     public void ClickOnRoom(View view) {
-        // Показывает результаты теста
-        //Intent intent = new Intent(this, TestResultsActivity.class); // Новая Activity для отображения результатов
-        //startActivity(intent);
+        Intent intent = new Intent(this, TestResultsActivity.class);
+        Test selectedTest = Select.getTest(); // Получаем текущий тест
+
+        if (selectedTest != null) {
+            intent.putExtra("testId", selectedTest.getId());
+            intent.putExtra("testTitle", selectedTest.getTitle());
+
+            // Создаем объект Result
+            Result testResult = new Result();
+            testResult.setTestId(selectedTest.getId());
+            testResult.setUserId("userId"); // Укажите текущего пользователя
+            testResult.setCorrectAnswer(0); // Укажите количество правильных ответов (заполните позже)
+            testResult.setCountAnswer(questionList.size()); // Укажите общее количество вопросов
+            testResult.setRoomId("roomId"); // Укажите идентификатор комнаты
+            //testResult.setStudentAnswers(new ArrayList<>()); // Или заполните список выбранных ответов
+
+            intent.putExtra("testResult", testResult); // Передаем объект
+        }
+
+        startActivity(intent);
     }
+
+
 }
 

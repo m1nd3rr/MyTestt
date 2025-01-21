@@ -108,6 +108,19 @@ public class ResultRepository {
         return future;
     }
 
+    public CompletableFuture<Boolean> getStudentResultByTestId(String questionId,String userId,String resultId) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        resultCollection.whereEqualTo("id", resultId).whereEqualTo("userId", userId).get().addOnCompleteListener(task -> {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+                Result result = document.toObject(Result.class);
+                future.complete(result.getStudentAnswers().get(questionId));
+            }
+        });
+
+        return future;
+    }
+
 
 
 }

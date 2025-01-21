@@ -25,9 +25,20 @@ public class Authentication {
         Authentication.teacher = teacher;
     }
 
-    public static Admin getAdmin() {return admin;}
+    public static Admin getAdmin() {
+        return admin;
+    }
 
-    public static void setAdmin(Admin admin) {Authentication.admin = admin;}
+    public static void setAdmin(Admin admin) {
+        Authentication.admin = admin;
+    }
+
+    public static String getStudentId() {
+        if (student != null) {
+            return student.getId(); // Предполагается, что метод getId() возвращает ID студента
+        }
+        return null; // Если студент не авторизован
+    }
 
     public static String getTeacherId() {
         if (teacher != null) {

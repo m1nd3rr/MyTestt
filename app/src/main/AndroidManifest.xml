@@ -81,6 +81,8 @@
         <activity android:name=".RoomCodeActivity" />
         <activity android:name=".RoomHistoryActivity"/>
         <activity android:name=".CompletedTestActivity" />
+        <activity android:name=".TestResultsActivity" />
+
     </application>
 
 </manifest>

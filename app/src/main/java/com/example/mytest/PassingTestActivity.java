@@ -24,6 +24,7 @@ import com.example.mytest.repository.ResultRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PassingTestActivity extends AppCompatActivity {
@@ -58,6 +59,7 @@ public class PassingTestActivity extends AppCompatActivity {
                     resultAll.setTestId(Select.getTest().getId());
                     resultAll.setCountAnswer(questionList.size());
                     resultAll.setCompleted(false);
+                    resultAll.setStudentAnswers(new HashMap<>());
 
                     resultAll=resultRepository.addResult(resultAll);
                     startPassing();
@@ -114,7 +116,9 @@ public class PassingTestActivity extends AppCompatActivity {
         if (result) {
             rightAnswer++;
         }
-
+        resultAll.getStudentAnswers().put(questionList.get(i).getId(),result);
+        ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
+        resultRepository.updateResult(resultAll);
         if (i < questionList.size() - 1) {
             i++;
             startPassing();

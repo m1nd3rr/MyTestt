@@ -99,6 +99,17 @@ public class PassingAdapter extends RecyclerView.Adapter<PassingAdapter.PassingV
         return true;
     }
 
+    public Answer getSelectedAnswer() {
+        if (question.getType().equals("single-choice") || question.getType().equals("true-false")) {
+            for (int i = 0; i < answerList.size(); i++) {
+                if (PassingViewHolder.booleanList.get(i)) {
+                    return answerList.get(i); // Возвращаем выбранный ответ
+                }
+            }
+        }
+        return null; // Если ничего не выбрано
+    }
+
     static class PassingViewHolder extends RecyclerView.ViewHolder {
         private final Question question;
         private TextView textTitle;
@@ -225,6 +236,9 @@ public class PassingAdapter extends RecyclerView.Adapter<PassingAdapter.PassingV
                     });
             }
         }
+
+
+
 
         private List<Integer> getSortNumbers() {
             List<Integer> sortNumbers = new ArrayList<>();
