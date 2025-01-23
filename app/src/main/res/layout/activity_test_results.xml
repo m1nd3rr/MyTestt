@@ -3,13 +3,74 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvTestTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:background="@drawable/bachground_profile"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="45dp"
+            android:layout_height="25dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Назад"
+            android:onClick="onBackButtonClickkk"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/tvTestTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:padding="16dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvTestPassed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вы успешно прошли тест"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_margin="16dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:padding="16dp" />
+        android:padding="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView
+            android:id="@+id/tvCorrectAnswers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/rounded_background_green"
+            android:padding="12dp"
+            android:text="Верные ответы: 0"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tvIncorrectAnswers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="9"
+            android:background="@drawable/rounded_background_red"
+            android:padding="12dp"
+            android:text="Ошибки: 0"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResults"

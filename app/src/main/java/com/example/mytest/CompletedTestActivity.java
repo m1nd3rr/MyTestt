@@ -57,27 +57,9 @@ public class CompletedTestActivity extends AppCompatActivity {
 
     public void ClickOnRoom(View view) {
         Intent intent = new Intent(this, TestResultsActivity.class);
-        Test selectedTest = Select.getTest(); // Получаем текущий тест
 
-        if (selectedTest != null) {
-            intent.putExtra("testId", selectedTest.getId());
-            intent.putExtra("testTitle", selectedTest.getTitle());
-
-            // Создаем объект Result
-            Result testResult = new Result();
-            testResult.setTestId(selectedTest.getId());
-            testResult.setUserId("userId"); // Укажите текущего пользователя
-            testResult.setCorrectAnswer(0); // Укажите количество правильных ответов (заполните позже)
-            testResult.setCountAnswer(questionList.size()); // Укажите общее количество вопросов
-            testResult.setRoomId("roomId"); // Укажите идентификатор комнаты
-            //testResult.setStudentAnswers(new ArrayList<>()); // Или заполните список выбранных ответов
-
-            intent.putExtra("testResult", testResult); // Передаем объект
-        }
 
         startActivity(intent);
     }
-
-
-}
+    }
 

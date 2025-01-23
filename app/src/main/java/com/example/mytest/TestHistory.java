@@ -46,7 +46,7 @@ public class TestHistory extends AppCompatActivity {
                 resultRepository.getAllResultByStudentId(Authentication.student.getId()).thenAccept(list ->{
                     testRepository.getAllTestByResult(list).thenAccept(listTest ->{
                         testList.addAll(listTest);
-                        TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
+                        TestAdapter testAdapter = new TestAdapter(testList,list, this,isCompleteMode);
                         recyclerView.setAdapter(testAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     });
@@ -55,7 +55,7 @@ public class TestHistory extends AppCompatActivity {
             else {
                 testRepository.getAllTestByStudentId(Authentication.student.getId()).thenAccept(list ->{
                     testList.addAll(list);
-                    TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
+                    TestAdapter testAdapter = new TestAdapter(testList,null, this,isCompleteMode);
                     recyclerView.setAdapter(testAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 });
@@ -64,7 +64,7 @@ public class TestHistory extends AppCompatActivity {
             testRepository.getAllTestByTeacherId(Authentication.getTeacher().getId())
                     .thenAccept(list -> {
                         testList.addAll(list);
-                        TestAdapter testAdapter = new TestAdapter(testList, this,isCompleteMode);
+                        TestAdapter testAdapter = new TestAdapter(testList,null, this,isCompleteMode);
                         recyclerView.setAdapter(testAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     });

@@ -19,6 +19,7 @@ import com.example.mytest.R;
 import com.example.mytest.TestHistory;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.auth.Select;
+import com.example.mytest.model.Result;
 import com.example.mytest.model.Test;
 import com.example.mytest.repository.TestRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,13 +28,15 @@ import java.util.List;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
     private final List<Test> testList;
+    private final List<Result> resultList;
     private final Context context;
     private final boolean isCompleteMode;
 
-    public TestAdapter(List<Test> testList, Context context, boolean isCompleteMode) {
+    public TestAdapter(List<Test> testList,List<Result> resultList, Context context, boolean isCompleteMode) {
         this.testList = testList;
         this.context = context;
         this.isCompleteMode = isCompleteMode;
+        this.resultList = resultList;
     }
 
     @NonNull
@@ -48,7 +51,15 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
         Test test = testList.get(position);
-        holder.bind(test);
+        Result result;
+        if(resultList != null){
+             result = resultList.get(position);
+        }else{
+            result = null;
+        }
+
+        holder.bind(test,result);
+
     }
 
     @Override
@@ -75,7 +86,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             this.isCompleteMode = isCompleteMode;
         }
 
-        public void bind(Test test) {
+        public void bind(Test test,Result result) {
             number.setText(String.valueOf(getAdapterPosition() + 1));
             text.setText(test.getTitle());
 
@@ -85,6 +96,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
                 if (isCompleteMode) {
                     // Если режим завершённых тестов
                     intent = new Intent(context, CompletedTestActivity.class);
+                    Select.setResult(result);
                 } else if (Authentication.getStudent() != null && !(context instanceof TestHistory)) {
                     // Если пользователь — студент, и это не TestHistory
                     intent = new Intent(context, PassingTestActivity.class);

@@ -1,96 +1,114 @@
 package com.example.mytest.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mytest.R;
+import com.example.mytest.TestResultsActivity;
+import com.example.mytest.auth.Authentication;
+import com.example.mytest.auth.Select;
 import com.example.mytest.model.Answer;
 import com.example.mytest.model.Question;
+import com.example.mytest.repository.AnswerRepository;
+import com.example.mytest.repository.ResultRepository;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class TestResultsAdapter extends RecyclerView.Adapter<TestResultsAdapter.ViewHolder> {
+    private final Context context;
+    private final List<Question> questions;
+    private int correctAnswersCount = 0;
+    private int incorrectAnswersCount = 0;
 
-    public static class ResultItem {
-        private Question question;
-        private List<Answer> correctAnswers;
-        private List<Answer> studentAnswers;
-
-        public Question getQuestion() {
-            return question;
-        }
-
-        public void setQuestion(Question question) {
-            this.question = question;
-        }
-
-        public List<Answer> getCorrectAnswers() {
-            return correctAnswers;
-        }
-
-        public void setCorrectAnswers(List<Answer> correctAnswers) {
-            this.correctAnswers = correctAnswers;
-        }
-
-        public List<Answer> getStudentAnswers() {
-            return studentAnswers;
-        }
-
-        public void setStudentAnswers(List<Answer> studentAnswers) {
-            this.studentAnswers = studentAnswers;
-        }
+    public TestResultsAdapter(Context context, List<Question> questions) {
+        this.context = context;
+        this.questions = questions;
     }
 
-    private final List<ResultItem> results;
-
-    public TestResultsAdapter(List<ResultItem> results) {
-        this.results = results;
-    }
-
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_result, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_result, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ResultItem item = results.get(position);
-
-        holder.tvQuestion.setText(item.getQuestion().getTitle());
-        StringBuilder answersText = new StringBuilder();
-        StringBuilder answersTextStudent = new StringBuilder();
-
-        for (Answer correctAnswer : item.getCorrectAnswers()) {
-            answersText.append("Правильный ответ: ").append(correctAnswer.getContent()).append("\n");
-        }
-
-        for (Answer studentAnswer : item.getStudentAnswers()) {
-            answersTextStudent.append("Ответ студента: ").append(studentAnswer.getContent()).append("\n");
-        }
-
-        holder.tvAnswers.setText(answersText.toString());
-        holder.tvAnswersStudent.setText(answersTextStudent.toString());
-
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Question question = questions.get(position);
+        holder.bind(question);
     }
 
     @Override
     public int getItemCount() {
-        return results.size();
+        return questions.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvQuestion, tvAnswers,tvAnswersStudent;
+    public int getCorrectAnswersCount() {
+        return correctAnswersCount;
+    }
 
-        public ViewHolder(@NonNull View itemView) {
+    public int getIncorrectAnswersCount() {
+        return incorrectAnswersCount;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView questionTitle, studentAnswer, correctAnswer;
+        private final AnswerRepository answerRepository;
+        private final ResultRepository resultRepository;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            tvQuestion = itemView.findViewById(R.id.tvQuestion);
-            tvAnswers = itemView.findViewById(R.id.tvAnswers);
-            tvAnswersStudent = itemView.findViewById(R.id.tvAnswersStudent);
+            questionTitle = itemView.findViewById(R.id.tvQuestion);
+            studentAnswer = itemView.findViewById(R.id.tvAnswers);
+            correctAnswer = itemView.findViewById(R.id.tvAnswersStudent);
+            answerRepository = new AnswerRepository(FirebaseFirestore.getInstance());
+            resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
+        }
+
+        public void bind(Question question) {
+            String questionId = question.getId();
+            questionTitle.setText(question.getTitle());
+
+            answerRepository.getCorrectAnswerByQuestionId(questionId).thenAccept(answerList -> {
+                resultRepository.getStudentResultByTestId(questionId, Authentication.getStudentId(), Select.getResult().getId()).thenAccept(aBoolean -> {
+                    correctAnswer.setText("Правильный ответ: ");
+                    for (Answer answer : answerList) {
+                        if (answer.isCorrect()) {
+                            if (answer.getContent() != null) {
+                                correctAnswer.setText(correctAnswer.getText() + answer.getContent() + ", ");
+                            }
+                        }
+                    }
+
+                    // Проверка правильности ответа
+                    ImageView statusIcon = itemView.findViewById(R.id.ivStatusIcon);
+                    if (aBoolean) {
+                        studentAnswer.setText("Верно");
+                        studentAnswer.setTextColor(context.getResources().getColor(R.color.green));
+                        statusIcon.setImageResource(R.drawable.complete);
+                        correctAnswersCount++;
+                    } else {
+                        studentAnswer.setText("Ответ неверен");
+                        studentAnswer.setTextColor(context.getResources().getColor(R.color.red));
+                        statusIcon.setImageResource(R.drawable.non);
+                        incorrectAnswersCount++;
+                    }
+                    statusIcon.setVisibility(View.VISIBLE);
+
+                    if (context instanceof TestResultsActivity) {
+                        TestResultsActivity activity = (TestResultsActivity) context;
+                        activity.updateResults(correctAnswersCount, incorrectAnswersCount);
+                    }
+                });
+            });
         }
     }
 }
+
+

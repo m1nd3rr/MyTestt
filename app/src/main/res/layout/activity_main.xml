@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:src="@drawable/im"
         android:scaleType="centerCrop"
-        android:contentDescription="background"
         android:layout_gravity="center"/>
 
     <LinearLayout

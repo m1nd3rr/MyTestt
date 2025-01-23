@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+
+        >
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,7 +86,7 @@
                 android:orientation="horizontal"
                 android:padding="12dp"
                 android:background="@color/gray_light"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="22dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -124,11 +127,14 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
+                    android:background="@drawable/light_blue_square"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
                     >
 
                     <Button
                         android:id="@+id/buttonCreateTest"
-                        android:layout_width="64dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/baseline_add_24"
                         android:elevation="8dp"
@@ -143,11 +149,15 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:background="@drawable/light_blue_square"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    >
 
                     <Button
                         android:id="@+id/button2"
-                        android:layout_width="64dp"
+                        android:layout_width="50dp"
                         android:layout_height="51dp"
                         android:background="@drawable/history"
                         android:elevation="8dp"
@@ -164,13 +174,17 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:background="@drawable/light_blue_square"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    >
 
                     <Button
                         android:id="@+id/button3"
-                        android:layout_width="64dp"
+                        android:layout_width="50dp"
                         android:layout_height="51dp"
-                        android:background="@drawable/history"
+                        android:background="@drawable/room"
                         android:elevation="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textSize="18sp"

@@ -2,23 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#C8C5C5"
+    android:layout_marginBottom="8dp"
+    >
 
-    <TextView
-        android:id="@+id/tvRoomCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Код комнаты"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+<TextView
+android:id="@+id/tvRoomCode"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Код комнаты"
+android:textSize="18sp"
+android:textStyle="bold"/>
 
     <!-- Название теста -->
-    <TextView
-        android:id="@+id/tvTestName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Название теста"
-        android:textSize="16sp"
-        android:paddingTop="4dp"/>
-</LinearLayout>
+<TextView
+android:id="@+id/tvTestName"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Название теста"
+android:textSize="16sp"
+android:paddingTop="4dp"/>
+    </LinearLayout>
