@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.mytest.adapter.AnswerAdapter;
 import com.example.mytest.auth.Authentication;
@@ -35,6 +37,7 @@ public class QuestionActivity extends AppCompatActivity {
     private AnswerRepository answerRepository;
     private QuestionRepository questionRepository;
     private TestRepository testRepository;
+    private Button btnSaveTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,16 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         editText = findViewById(R.id.QuestionTitle);
-
+        btnSaveTest = findViewById(R.id.btnSaveTest);
         question = Select.getQuestion();
         editText.setText(question.getTitle());
         answerRepository = new AnswerRepository(FirebaseFirestore.getInstance());
         questionRepository = new QuestionRepository(FirebaseFirestore.getInstance());
         testRepository = new TestRepository(FirebaseFirestore.getInstance());
+
+        if ("true-false".equals(Select.getQuestion().getType())) {
+            btnSaveTest.setVisibility(View.GONE);
+        }
 
         RecyclerView recyclerView = findViewById(R.id.rvAnswerList);
         answerRepository.getAllAnswerById(question.getId())
@@ -66,6 +73,7 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void singleChoose(){
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_answer, null);
@@ -225,6 +233,10 @@ public class QuestionActivity extends AppCompatActivity {
             editText.setError("Заголовок не может быть пустым");
             return;
         }
+        if (answerList.size() < 2) {
+            Toast.makeText(this, "Вопрос должен содержать минимум 2 ответа.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         question.setTitle(updatedTitle);
         testRepository.getById(question.getTestId())
                 .thenAccept(test -> {
@@ -235,5 +247,6 @@ public class QuestionActivity extends AppCompatActivity {
                     finish();
                 });
     }
+
 
 }

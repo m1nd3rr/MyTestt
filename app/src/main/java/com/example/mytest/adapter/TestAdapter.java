@@ -42,7 +42,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     @NonNull
     @Override
     public TestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Выбираем разметку на основе режима (завершённые тесты или обычные)
         int layoutId = isCompleteMode ? R.layout.complete_test_item_list : R.layout.test_item_list;
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
         return new TestViewHolder(view, context, this, isCompleteMode);
@@ -90,34 +89,29 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             number.setText(String.valueOf(getAdapterPosition() + 1));
             text.setText(test.getTitle());
 
-            // Обработчик клика для элемента списка
             layout.setOnClickListener(view -> {
                 Intent intent;
                 if (isCompleteMode) {
-                    // Если режим завершённых тестов
                     intent = new Intent(context, CompletedTestActivity.class);
                     Select.setResult(result);
                 } else if (Authentication.getStudent() != null && !(context instanceof TestHistory)) {
-                    // Если пользователь — студент, и это не TestHistory
                     intent = new Intent(context, PassingTestActivity.class);
                 } else {
-                    // Режим по умолчанию — создание теста
                     intent = new Intent(context, CreateTestActivity.class);
                 }
                 Select.setTest(test);
                 context.startActivity(intent);
             });
 
-            // Обработчик клика для иконки удаления (если доступно)
             if (!isCompleteMode) {
                 imageView.setOnClickListener(view -> {
                     TestRepository testRepository = new TestRepository(FirebaseFirestore.getInstance());
-                    testRepository.deleteTest(test);
+                    testRepository.deleteTestById(test.getId());
                     int position = getAdapterPosition();
                     adapter.removeTest(position);
                 });
             } else {
-                imageView.setVisibility(View.GONE); // Скрыть иконку в режиме завершённых тестов
+                imageView.setVisibility(View.GONE);
             }
         }
     }

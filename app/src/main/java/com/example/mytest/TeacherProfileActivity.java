@@ -58,6 +58,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         testRepository = new TestRepository(FirebaseFirestore.getInstance());
         teacherRepository = new TeacherRepository(FirebaseFirestore.getInstance());
         setCreateTest();
+        updateTestCount();
 
         TextView textView = findViewById(R.id.userName);
         textView.setText(getTeacher().getFirstName());
@@ -120,6 +121,28 @@ public class TeacherProfileActivity extends AppCompatActivity {
             // Обработайте ошибку
         }
     }
+
+    private void updateTestCount() {
+        String teacherId = getTeacher().getId(); // Получаем ID текущего преподавателя
+        TextView createTestTextView = findViewById(R.id.createTest);
+
+        // Вызываем метод репозитория
+        testRepository.getAllTestByTeacherId(teacherId).thenAccept(tests -> {
+            // Обновляем текстовое поле на основе результата
+            if (tests != null && !tests.isEmpty()) {
+                createTestTextView.setText(String.valueOf(tests.size()));
+            } else {
+                createTestTextView.setText("0"); // Если тестов нет, отображаем 0
+            }
+        }).exceptionally(throwable -> {
+            // Обрабатываем возможные ошибки
+            Log.e("TeacherProfileActivity", "Ошибка при получении тестов", throwable);
+            createTestTextView.setText("0");
+            return null;
+        });
+    }
+
+
 
     public void onClickOpenGallery(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

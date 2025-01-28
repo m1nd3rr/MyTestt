@@ -1,5 +1,6 @@
 package com.example.mytest;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mytest.adapter.AnswerAdapter;
@@ -38,13 +40,19 @@ public class CreateTestActivity extends AppCompatActivity {
     List<Question> questionList = new ArrayList<>();
     EditText editText;
     Test test;
+    TextView tvSelectTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_test);
         test = Select.getTest();
+        if (test.getDuration() == null) {
+            test.setDuration(null); // Установка бесконечного времени по умолчанию
+        }
         boolean isCompleteMode = getIntent().getBooleanExtra("isCompleteMode", false);
+        tvSelectTime = findViewById(R.id.tvSelectTime);
+        tvSelectTime.setText(test.getDuration() == null ? "∞ Без времени" : test.getDuration() + " минут");
 
         if (Authentication.getStudent() == null ) {
             findViewById(R.id.btnPublishTest).setVisibility(View.VISIBLE);
@@ -97,6 +105,10 @@ public class CreateTestActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnCreateTest).setOnClickListener(view -> {
+            if (questionList.isEmpty()) {
+                Toast.makeText(this, "Нельзя создать тест без вопросов.", Toast.LENGTH_SHORT).show();
+                return;
+            }
             test.setTitle(editText.getText().toString());
             testRepository.updateTest(test);
 
@@ -110,43 +122,71 @@ public class CreateTestActivity extends AppCompatActivity {
             finish();
         });
     }
-    public void onBackButtonClick(View view) {
-        Intent intentProfile;
-        if (Authentication.student != null) {
-            intentProfile = new Intent(this, StudentProfileActivity.class);
-        } else {
-            intentProfile = new Intent(this, TeacherProfileActivity.class);
-        }
-        startActivity(intentProfile);
-        finish();
+
+    public void showTimePicker(View view) {
+        final String[] timeOptions = {"∞", "5 минут", "10 минут", "15 минут", "20 минут", "30 минут", "45 минут"};
+        final Integer[] timeValues = {null, 5, 10, 15, 20, 30, 45}; // null означает бесконечность
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Выберите время")
+                .setItems(timeOptions, (dialog, which) -> {
+                    Integer selectedValue = timeValues[which];
+                    if (selectedValue == null) {
+                        tvSelectTime.setText("∞");
+                    } else {
+                        tvSelectTime.setText(timeOptions[which]);
+                    }
+                    test.setDuration(selectedValue); // null для бесконечности
+                    testRepository.updateTest(test);
+                });
+        builder.create().show();
     }
 
+
+    public void onBackButtonClick(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Внимание")
+                .setMessage("Если вы выйдете, то данные теста будут удалены. Вы уверены?")
+                .setPositiveButton("Выйти", (dialog, which) -> {
+                    testRepository.deleteTestById(test.getId());
+                    Intent intentProfile;
+                    if (Authentication.student != null) {
+                        intentProfile = new Intent(this, StudentProfileActivity.class);
+                    } else {
+                        intentProfile = new Intent(this, TeacherProfileActivity.class);
+                    }
+                    startActivity(intentProfile);
+                    finish();
+                })
+                .setNegativeButton("Продолжить", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+
+
     private String generateRoomNumber() {
-        // Генерация уникального номера комнаты
-        return String.valueOf(System.currentTimeMillis()).substring(8); // Возвращает последние 5 символов текущего времени
+        return String.valueOf(System.currentTimeMillis()).substring(8);
     }
 
 
 
     public void ClickOnRoom(View view) {
-        // Получение текущего теста
         Test currentTest = Select.getTest();
         if (currentTest == null) {
             Toast.makeText(this, "Тест не выбран.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Создание новой комнаты
         Room room = new Room();
-        room.setTestId(currentTest.getId()); // Установка ID теста
-        room.setTestName(currentTest.getTitle()); // Установка названия теста
-        room.setRoomNumber(generateRoomNumber()); // Генерация кода комнаты
+        room.setTestId(currentTest.getId());
+        room.setTestName(currentTest.getTitle());
+        room.setRoomNumber(generateRoomNumber());
 
 
-        // Добавление комнаты в базу данных
         roomRepository.addRoom(room);
 
-        // Передача данных в RoomCodeActivity
         Intent intent = new Intent(this, RoomCodeActivity.class);
         intent.putExtra("ROOM_CODE", room.getRoomNumber());
         intent.putExtra("TEST_NAME", room.getTestName());

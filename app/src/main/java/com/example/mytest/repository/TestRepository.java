@@ -1,22 +1,15 @@
 package com.example.mytest.repository;
 
-import androidx.annotation.NonNull;
-
 import com.example.mytest.model.Answer;
 import com.example.mytest.model.Question;
 import com.example.mytest.model.Result;
 import com.example.mytest.model.Room;
-import com.example.mytest.model.Student;
 import com.example.mytest.model.Test;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,39 +22,47 @@ public class TestRepository {
         testCollection = db.collection("tests");
         this.db = db;
     }
+    public void deleteTest(Test test) {
+        testCollection.document(test.getId()).delete();
+    }
 
     public Test addTest(Test test) {
         String testId = testCollection.document().getId();
         test.setId(testId);
-        test.setTimestamp(Timestamp.now());
+        //test.setTimestamp(Timestamp.now());
         testCollection.document(testId).set(test);
         return test;
     }
 
-    public void deleteTest(Test test) {
-        testCollection.document(test.getId()).delete().addOnCompleteListener(task -> {
-            db.collection("room").whereEqualTo("testId", test.getId()).get().addOnCompleteListener(roomTask -> {
-                for (QueryDocumentSnapshot document : roomTask.getResult()) {
-                    Room room = document.toObject(Room.class);
-                    db.collection("room").document(room.getId()).delete();
-                }
-            });
+    public void deleteTestById(String testId) {
+        testCollection.document(testId).delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Удаляем связанные комнаты
+                db.collection("room").whereEqualTo("testId", testId).get().addOnCompleteListener(roomTask -> {
+                    for (QueryDocumentSnapshot document : roomTask.getResult()) {
+                        Room room = document.toObject(Room.class);
+                        db.collection("room").document(room.getId()).delete();
+                    }
+                });
 
-            db.collection("questions").whereEqualTo("testId", test.getId()).get().addOnCompleteListener(questionTask -> {
-                for (QueryDocumentSnapshot document : questionTask.getResult()) {
-                    Question question = document.toObject(Question.class);
+                // Удаляем связанные вопросы и ответы
+                db.collection("questions").whereEqualTo("testId", testId).get().addOnCompleteListener(questionTask -> {
+                    for (QueryDocumentSnapshot document : questionTask.getResult()) {
+                        Question question = document.toObject(Question.class);
 
-                    db.collection("answer").whereEqualTo("questionId", question.getId()).get().addOnCompleteListener(answerTask -> {
-                        for (QueryDocumentSnapshot answerDocument : answerTask.getResult()) {
-                            Answer answer = answerDocument.toObject(Answer.class);
-                            db.collection("answer").document(answer.getId()).delete();
-                        }
-                    });
-                    db.collection("questions").document(question.getId()).delete();
-                }
-            });
+                        db.collection("answer").whereEqualTo("questionId", question.getId()).get().addOnCompleteListener(answerTask -> {
+                            for (QueryDocumentSnapshot answerDocument : answerTask.getResult()) {
+                                Answer answer = answerDocument.toObject(Answer.class);
+                                db.collection("answer").document(answer.getId()).delete();
+                            }
+                        });
+                        db.collection("questions").document(question.getId()).delete();
+                    }
+                });
+            }
         });
     }
+
 
     public void updateTest(Test test) {
         testCollection.document(test.getId()).set(test);
@@ -95,7 +96,7 @@ public class TestRepository {
                 Test test = document.toObject(Test.class);
                 testList.add(test);
             }
-            testList.sort(Comparator.comparing(Test::getTimestamp));
+            //testList.sort(Comparator.comparing(Test::getTimestamp));
             future.complete(testList);
         });
 
@@ -110,7 +111,7 @@ public class TestRepository {
                 Test test = document.toObject(Test.class);
                 testList.add(test);
             }
-            testList.sort(Comparator.comparing(Test::getTimestamp));
+            //testList.sort(Comparator.comparing(Test::getTimestamp));
             future.complete(testList);
         });
 
@@ -128,7 +129,7 @@ public class TestRepository {
                     testList.add(test);
                 }
             }
-            testList.sort(Comparator.comparing(Test::getTimestamp));
+            //testList.sort(Comparator.comparing(Test::getTimestamp));
             future.complete(testList);
         });
 
@@ -173,5 +174,7 @@ public class TestRepository {
         }
         return future;
     }
+
+
 
 }

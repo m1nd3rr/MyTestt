@@ -58,8 +58,11 @@ public class RoomCodeActivity extends AppCompatActivity {
         ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
         StudentRepository studentRepository = new StudentRepository(FirebaseFirestore.getInstance());
 
-        // Слушатель для получения результатов в реальном времени
-        resultRepository.getResultsByTestId(Select.getTest().getId(), new EventListener<QuerySnapshot>() {
+        // Получаем roomId из переданного Intent
+        String roomId = getIntent().getStringExtra("ROOM_ID"); // предполагаем, что передаём roomId через Intent
+
+        // Слушатель для получения результатов по testId и roomId
+        resultRepository.getResultsByTestIdAndRoomId(Select.getTest().getId(), roomId, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {
@@ -82,4 +85,5 @@ public class RoomCodeActivity extends AppCompatActivity {
             }
         });
     }
+
 }

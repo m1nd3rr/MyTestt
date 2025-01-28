@@ -11,21 +11,7 @@
         android:id="@+id/first_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Имя"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Фамилия"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/group_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Группа"
+        android:text="Название"
         android:textSize="16sp" />
 
     <Button

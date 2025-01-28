@@ -51,6 +51,7 @@ public class RoomHistoryAdapter extends RecyclerView.Adapter<RoomHistoryAdapter.
             testRepository.getById(room.getTestId()).thenAccept(test -> {
                 intent.putExtra("ROOM_CODE",room.getRoomNumber());
                 intent.putExtra("TEST_NAME",room.getTestName());
+                intent.putExtra("ROOM_ID", room.getId());
                 Select.setTest(test);
                 context.startActivity(intent);
 

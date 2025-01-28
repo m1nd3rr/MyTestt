@@ -1,12 +1,11 @@
 package com.example.mytest.repository;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.example.mytest.model.Result;
+import com.example.mytest.model.Room;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -19,8 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class ResultRepository {
     private final CollectionReference resultCollection;
+    private final RoomRepository roomRepository;
     public ResultRepository(FirebaseFirestore db) {
         resultCollection = db.collection("result");
+        roomRepository = new RoomRepository(db);
     }
 
     public Result addResult(Result result) {
@@ -28,9 +29,22 @@ public class ResultRepository {
         result.setId(resultId);
         result.setTime(Timestamp.now());
         result.setCompleted(true);
-        resultCollection.document(resultId).set(result);
+
+        // Получаем roomId по testId
+        roomRepository.getAllRoomsByTestId(result.getTestId()).thenAccept(rooms -> {
+            if (!rooms.isEmpty()) {
+                // Предполагаем, что тест привязан хотя бы к одной комнате
+                Room room = rooms.get(0); // Если есть несколько комнат, выберите нужную
+                result.setRoomId(room.getId()); // Устанавливаем roomId в результат
+            }
+
+            // Сохраняем результат с roomId
+            resultCollection.document(resultId).set(result);
+        });
+
         return result;
     }
+
     public CompletableFuture<Result> updateResult(Result result) {
         CompletableFuture<Result> future = new CompletableFuture<>();
 
@@ -85,28 +99,19 @@ public class ResultRepository {
         return future;
     }
 
-    public ListenerRegistration getResultsByTestId(String testId, EventListener<QuerySnapshot> listener) {
+    public ListenerRegistration getResultsByTestIdAndRoomId(String testId, String roomId, EventListener<QuerySnapshot> listener) {
         return resultCollection.whereEqualTo("testId", testId)
+                .whereEqualTo("roomId", roomId) // Фильтрация по roomId
                 .addSnapshotListener(listener);
     }
-    public CompletableFuture<List<Result>> getResultsByRoomId(String roomId) {
-        CompletableFuture<List<Result>> future = new CompletableFuture<>();
-        List<Result> resultList = new ArrayList<>();
 
-        resultCollection.whereEqualTo("roomId", roomId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult() != null) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Result result = document.toObject(Result.class);
-                    resultList.add(result);
-                }
-                future.complete(resultList);
-            } else {
-                future.completeExceptionally(task.getException());
-            }
-        });
-
-        return future;
+    public ListenerRegistration getResultsByRoomId(String roomId, EventListener<QuerySnapshot> listener) {
+        return resultCollection.whereEqualTo("roomId", roomId)
+                .addSnapshotListener(listener);
     }
+
+
+
 
     public CompletableFuture<Boolean> getStudentResultByTestId(String questionId,String userId,String resultId) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
@@ -120,6 +125,9 @@ public class ResultRepository {
 
         return future;
     }
+
+
+
 
 
 

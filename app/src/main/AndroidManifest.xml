@@ -82,6 +82,8 @@
         <activity android:name=".RoomHistoryActivity"/>
         <activity android:name=".CompletedTestActivity" />
         <activity android:name=".TestResultsActivity" />
+        <activity android:name=".AllTeacherActivity" />
+        <activity android:name=".AllTestsActivity" />
 
     </application>
 

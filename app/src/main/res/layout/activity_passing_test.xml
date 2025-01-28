@@ -1,57 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PassingTestActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#EDEBEB">
 
+    <!-- Верхняя панель -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:padding="23dp"
         android:gravity="center_vertical">
 
         <ImageButton
             android:onClick="backButton"
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/close"
             android:background="?android:attr/selectableItemBackground" />
 
+        <TextView
+            android:id="@+id/tvQuestionCount"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="4"
+            android:text="0/0"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:background="@drawable/question_count_square" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_weight="2"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/green_light_square"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/iconTimer"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/timer"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="∞"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textPassing"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="#D3D3D3"
-        android:text="Question Title"
-        android:textSize="18sp"
-        android:padding="10dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background_passing"
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/text_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" />
+        <TextView
+            android:id="@+id/textPassing"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:background="@drawable/edit_text_background"
+            android:padding="16dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" /> <!-- Добавлен отступ снизу -->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPassing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:gravity="center"
+            android:id="@+id/text_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите свой ответ"
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"
+            android:maxLength="500"
+            android:padding="6dp"
+            />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ответить"
-        android:backgroundTint="#3C599E"
-        android:layout_marginTop="20dp"
-        android:onClick="nextQuestion" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPassing"
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
+
+        <Button
+            android:onClick="nextQuestion"
+            android:id="@+id/btnAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ответить"
+            android:backgroundTint="#3C599E"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
 
 </LinearLayout>

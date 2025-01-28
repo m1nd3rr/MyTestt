@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Список студентов"
+            android:text="Список тестов"
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_gravity="center"
@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_students"
+        android:id="@+id/recycler_view_tests"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

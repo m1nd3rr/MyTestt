@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 public class AdminRepository {
     private final CollectionReference adminCollection;
 
+
     public AdminRepository(FirebaseFirestore db) {
         adminCollection = db.collection("admin");
     }

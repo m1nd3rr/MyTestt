@@ -62,13 +62,16 @@ public class QuestionSettingActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public  void ClickOnTrueFalse(View view){
-        Intent intent = new Intent(QuestionSettingActivity.this,QuestionActivity.class);
+    public void ClickOnTrueFalse(View view) {
         question.setType("true-false");
         Select.setQuestion(questionRepository.addQuestion(question));
+
+        Intent intent = new Intent(QuestionSettingActivity.this, QuestionActivity.class);
+        intent.putExtra("questionType", question.getType());
         startActivity(intent);
         finish();
     }
+
     public  void ClickOnConnect(View view){
         Intent intent = new Intent(QuestionSettingActivity.this,QuestionActivity.class);
         question.setType("connect");

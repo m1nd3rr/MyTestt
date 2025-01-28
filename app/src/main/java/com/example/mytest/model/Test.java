@@ -7,19 +7,21 @@ import java.io.Serializable;
 public class Test implements Serializable {
     private String teacherId;
     private String title;
-    private transient Timestamp timestamp;
+    //private transient Timestamp timestamp;
     private String studentId;
+    private Integer duration = null;
 
     private String id;
+
 
     public Test() {
     }
 
-    public Test(String teacherId, String title, Timestamp timestamp, String studentId, String id) {
+    public Test(String teacherId, String title, String studentId, Integer duration, String id) {
         this.teacherId = teacherId;
         this.title = title;
-        this.timestamp = timestamp;
         this.studentId = studentId;
+        this.duration = duration;
         this.id = id;
     }
 
@@ -47,12 +49,19 @@ public class Test implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+//    public Timestamp getTimestamp() {return timestamp;}
+//
+//    public void setTimestamp(Timestamp timestamp) {
+//        this.timestamp = timestamp;
+//    }
+
+
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public String getStudentId() {
