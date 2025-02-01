@@ -16,6 +16,7 @@ import com.example.mytest.CompletedTestActivity;
 import com.example.mytest.CreateTestActivity;
 import com.example.mytest.PassingTestActivity;
 import com.example.mytest.R;
+import com.example.mytest.TestDetailActivity;
 import com.example.mytest.TestHistory;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.auth.Select;
@@ -63,7 +64,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
     @Override
     public int getItemCount() {
-        return testList.size();
+        return testList == null ? 0 : testList.size();
     }
 
     static class TestViewHolder extends RecyclerView.ViewHolder {
@@ -95,7 +96,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
                     intent = new Intent(context, CompletedTestActivity.class);
                     Select.setResult(result);
                 } else if (Authentication.getStudent() != null && !(context instanceof TestHistory)) {
-                    intent = new Intent(context, PassingTestActivity.class);
+                    intent = new Intent(context, TestDetailActivity.class);
                 } else {
                     intent = new Intent(context, CreateTestActivity.class);
                 }

@@ -34,7 +34,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Выбор разметки в зависимости от режима
         int layoutId = isCompleteMode ? R.layout.complete_question_item_list : R.layout.question_item_list;
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
         return new QuestionViewHolder(view, context, isCompleteMode);

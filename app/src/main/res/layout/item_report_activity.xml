@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/complaint_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Жалоба на тест"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_marginBottom="10dp"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:id="@+id/test_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_question"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/notificationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/test_number"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/testing"
+            android:layout_margin="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/test_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="название теста"
+            android:textSize="16sp"
+            android:paddingHorizontal="10dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/complaint_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+    android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Решено"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#3C599E"
+            android:layout_marginStart="8dp"/>
+</LinearLayout>
+    </LinearLayout>

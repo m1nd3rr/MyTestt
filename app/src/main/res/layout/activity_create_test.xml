@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:text="+"
             android:backgroundTint="#3C599E"
-            android:layout_weight="0.35"
+            android:layout_weight="0.29"
             android:layout_marginHorizontal="5dp"
             android:padding="0dp"
             />
@@ -92,6 +92,7 @@
             android:onClick="ClickOnRoom"
             android:text="Опубликовать тест"
             android:backgroundTint="#3C599E"
+            android:textSize="30px"
             android:layout_weight="1.2"
             android:layout_marginHorizontal="5dp"
             />
@@ -103,6 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Обновить тест"
+            android:textSize="30px"
             android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
             />

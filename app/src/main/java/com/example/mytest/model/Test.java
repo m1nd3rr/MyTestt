@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Test implements Serializable {
     private String teacherId;
     private String title;
-    //private transient Timestamp timestamp;
+    //private transient Timestamp timestamp;я
     private String studentId;
     private Integer duration = null;
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mytest.adapter.TestAdapter;
 import com.example.mytest.adapter.TestsAdminAdapter;
+import com.example.mytest.auth.Authentication;
 import com.example.mytest.repository.TestRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -18,12 +19,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AllTestsActivity extends AppCompatActivity {
     private TestRepository testRepository;
     private RecyclerView recyclerView;
-    private TestsAdminAdapter adapter;
+    private TestAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_tests_activity);
+
 
         testRepository = new TestRepository(FirebaseFirestore.getInstance());
         recyclerView = findViewById(R.id.recycler_view_tests);
@@ -34,7 +36,7 @@ public class AllTestsActivity extends AppCompatActivity {
 
     private void loadTests() {
         testRepository.getAllTest().thenAccept(testList -> {
-            adapter = new TestsAdminAdapter(testList, null, this, false);
+            adapter = new TestAdapter(testList, null, this, false);
             recyclerView.setAdapter(adapter);
         }).exceptionally(throwable -> {
             Toast.makeText(this, "Ошибка загрузки тестов", Toast.LENGTH_SHORT).show();

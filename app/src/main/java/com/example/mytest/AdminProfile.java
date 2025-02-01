@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mytest.repository.AdminRepository;
+import com.example.mytest.repository.ReportRepository;
 import com.example.mytest.repository.StudentRepository;
 import com.example.mytest.repository.TeacherRepository;
 import com.example.mytest.repository.TestRepository;
@@ -19,6 +20,9 @@ public class AdminProfile extends AppCompatActivity {
     private StudentRepository studentRepository;
     private TeacherRepository teacherRepository;
     private TestRepository testRepository;
+    private TextView allReports;
+    private ReportRepository reportRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +34,17 @@ public class AdminProfile extends AppCompatActivity {
         studentRepository = new StudentRepository(FirebaseFirestore.getInstance());
         teacherRepository = new TeacherRepository(FirebaseFirestore.getInstance());
         testRepository = new TestRepository(FirebaseFirestore.getInstance());
+        reportRepository = new ReportRepository(FirebaseFirestore.getInstance());
+        allReports = findViewById(R.id.allReports);
 
-        // Загрузка данных
+
         loadAllStudents();
         loadAllTeachers();
-        loadAllTests(); // Загрузка количества тестов
+        loadAllTests();
+        updateComplaintCount();
+
     }
 
-    // Метод для загрузки количества студентов
     public void loadAllStudents() {
         TextView textViewStudents = findViewById(R.id.allStudent);
         studentRepository.getAllStudent().thenAccept(studentList -> {
@@ -52,8 +59,20 @@ public class AdminProfile extends AppCompatActivity {
             return null;
         });
     }
+    private void updateComplaintCount() {
+        reportRepository.getAllReportss()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        int complaintCount = task.getResult().size(); // Получаем общее количество жалоб
+                        allReports.setText("Всего жалоб: " + complaintCount); // Обновляем TextView с текстом
+                    } else {
+                        allReports.setText("Всего жалоб: 0"); // Если ошибка или нет жалоб, устанавливаем 0
+                    }
+                });
+    }
 
-    // Метод для загрузки количества преподавателей
+
+
     public void loadAllTeachers() {
         TextView textViewTeachers = findViewById(R.id.allTeacher);
         teacherRepository.getAllTeacher().thenAccept(teacherList -> {
@@ -69,7 +88,6 @@ public class AdminProfile extends AppCompatActivity {
         });
     }
 
-    // Метод для загрузки количества тестов
     public void loadAllTests() {
         TextView textViewTests = findViewById(R.id.allTests); // Добавьте TextView в XML с id allTests
         testRepository.getAllTest().thenAccept(testList -> {
@@ -85,28 +103,28 @@ public class AdminProfile extends AppCompatActivity {
         });
     }
 
-    // Переход к списку студентов
     public void openAllStudents(View view) {
         Intent intent = new Intent(this, AllStudentsActivity.class);
         startActivity(intent);
     }
 
-    // Переход к списку преподавателей
     public void openAllTeachers(View view) {
         Intent intent = new Intent(this, AllTeacherActivity.class);
         startActivity(intent);
     }
 
-    // Переход к списку тестов
     public void openAllTests(View view) {
         Intent intent = new Intent(this, AllTestsActivity.class);
         startActivity(intent);
     }
 
-    // Обработчик кнопки "Назад"
     public void onBack(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
+    }
+
+    public void AllReports(View view) {
+        Intent intent = new Intent(this, AllReportsActivity.class);
+        startActivity(intent);
     }
 }

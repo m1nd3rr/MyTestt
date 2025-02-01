@@ -43,7 +43,6 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-
         editText = findViewById(R.id.QuestionTitle);
         btnSaveTest = findViewById(R.id.btnSaveTest);
         question = Select.getQuestion();

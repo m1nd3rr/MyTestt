@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_question"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="15dp"
+    android:id="@+id/question_item">
+
+
+
+    <TextView
+        android:id="@+id/question_number"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/background_number"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/question_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Вопрос"
+        android:paddingHorizontal="10dp" />
+</LinearLayout>

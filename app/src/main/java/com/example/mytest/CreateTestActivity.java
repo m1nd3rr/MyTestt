@@ -54,10 +54,19 @@ public class CreateTestActivity extends AppCompatActivity {
         tvSelectTime = findViewById(R.id.tvSelectTime);
         tvSelectTime.setText(test.getDuration() == null ? "∞ Без времени" : test.getDuration() + " минут");
 
-        if (Authentication.getStudent() == null ) {
-            findViewById(R.id.btnPublishTest).setVisibility(View.VISIBLE);
-        } else {
+//        if (Authentication.getStudent() == null ) {
+//            if(Authentication.getAdmin() == null){
+//                findViewById(R.id.btnPublishTest).setVisibility(View.VISIBLE);
+//            }
+//        }
+//        else {
+//            findViewById(R.id.btnPublishTest).setVisibility(View.GONE);
+//        }
+
+        if(Authentication.getStudent() != null || Authentication.getAdmin()!= null){
             findViewById(R.id.btnPublishTest).setVisibility(View.GONE);
+        }else {
+            findViewById(R.id.btnPublishTest).setVisibility(View.VISIBLE);
         }
         questionRepository = new QuestionRepository(FirebaseFirestore.getInstance());
         roomRepository = new RoomRepository(FirebaseFirestore.getInstance());

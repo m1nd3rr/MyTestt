@@ -57,8 +57,6 @@ public class CompletedTestActivity extends AppCompatActivity {
 
     public void ClickOnRoom(View view) {
         Intent intent = new Intent(this, TestResultsActivity.class);
-
-
         startActivity(intent);
     }
     }

@@ -14,6 +14,7 @@ import android.util.Pair;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,14 +27,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.auth.Select;
 import com.example.mytest.model.Student;
-import com.example.mytest.model.Teacher;
 import com.example.mytest.model.Test;
 import com.example.mytest.repository.ResultRepository;
 import com.example.mytest.repository.RoomRepository;
@@ -55,6 +54,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     private ResultRepository resultRepository;
     TestRepository testRepository;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private ImageView messageIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +123,7 @@ public class StudentProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     public void createPieDiagram(Pair<Integer, Integer> pair) {
         PieChart pieChart = findViewById(R.id.pieChart);
