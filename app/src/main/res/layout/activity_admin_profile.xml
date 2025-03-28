@@ -31,15 +31,16 @@
                     android:layout_height="90dp"
                     android:layout_marginEnd="16dp"
                     android:onClick="onClickOpenGallery"
-                    android:src="@drawable/administrator" />
+                    android:src="@drawable/admin" />
 
                 <TextView
+                    android:layout_gravity="center"
                     android:id="@+id/loginAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Admin"
-                    android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="35sp"
                     android:gravity="center_vertical" />
             </LinearLayout>
 
@@ -59,100 +60,117 @@
             android:layout_height="wrap_content"
             android:text="Твои действия"
             android:textColor="#000"
-            android:textSize="18sp"
+            android:textSize="28sp"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="10dp" />
 
-        <!-- Блок Всего студентов -->
         <LinearLayout
-            android:onClick="openAllStudents"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="12dp"
-            android:background="@color/gray_light"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_bg"
             android:layout_marginBottom="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_person_24" />
+                android:src="@drawable/graduated" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_weight="1"
                 android:layout_marginStart="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Всего студентов"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/allStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
-                    android:textColor="#666"
-                    android:textSize="12sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
             </LinearLayout>
+            <ImageView
+                android:onClick="openAllStudents"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/next"
+                android:layout_gravity="center|end"/>
         </LinearLayout>
 
         <LinearLayout
-            android:onClick="openAllTeachers"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_bg"
             android:padding="12dp"
-            android:background="@color/gray_light"
             android:layout_marginBottom="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_person_24" />
+                android:src="@drawable/teacher" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_weight="1"
                 android:layout_marginStart="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Всего преподавателей"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/allTeacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="#666"
-                    android:textSize="12sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
             </LinearLayout>
+            <ImageView
+                android:onClick="openAllTeachers"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/next"
+                android:layout_gravity="center|end"/>
         </LinearLayout>
 
         <LinearLayout
-            android:onClick="openAllTests"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="12dp"
-            android:background="@color/gray_light"
             android:layout_marginBottom="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_person_24" />
+                android:src="@drawable/testing" />
 
             <LinearLayout
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -162,34 +180,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Всего тестов"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/allTests"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="#666"
-                    android:textSize="12sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
             </LinearLayout>
+            <ImageView
+                android:onClick="openAllTests"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/next"
+                android:layout_gravity="center|end"/>
         </LinearLayout>
 
         <LinearLayout
-            android:onClick="AllReports"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="12dp"
-            android:background="@color/gray_light"
             android:layout_marginBottom="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_person_24" />
+                android:src="@drawable/report" />
 
             <LinearLayout
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -199,17 +225,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Жалобы пользователей"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/allReports"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="#666"
-                    android:textSize="12sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
             </LinearLayout>
+            <ImageView
+                android:onClick="AllReports"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/next"
+                android:layout_gravity="center|end"/>
         </LinearLayout>
 
     </LinearLayout>

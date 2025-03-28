@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF"/> <!-- Цвет фона -->
+    <padding android:left="5dp" android:top="5dp" android:right="5dp" android:bottom="5dp" />
+    <stroke android:color="#FFFFFF" android:width="12dp" /> <!-- Цвет и ширина границы -->
+</shape>

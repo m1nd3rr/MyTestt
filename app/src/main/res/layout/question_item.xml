@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_question"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_margin="10dp"
     android:padding="15dp"
     android:id="@+id/question_item">
@@ -22,6 +22,8 @@
 
 
     <TextView
+        android:layout_gravity="center"
+        android:textColor="@color/white"
         android:id="@+id/question_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

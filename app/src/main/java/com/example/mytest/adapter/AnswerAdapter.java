@@ -1,9 +1,11 @@
 package com.example.mytest.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,7 +24,9 @@ import com.example.mytest.repository.AnswerRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder> {
     private final List<Answer> answerList;
@@ -183,6 +187,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
                 spinner.setAdapter(adapter);
                 spinner.setSelection(adapter.getPosition(answer.getSortNumber()));
 
+
                 AlertDialog dialog = new AlertDialog.Builder(v.getContext())
                         .setTitle("Отредактируйте ответ")
                         .setView(dialogView)
@@ -199,7 +204,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
                             answerAdapter.notifyItemRemoved(getAdapterPosition());
                         })
                         .create();
-
                 dialog.show();
             });
         }

@@ -90,7 +90,7 @@ public class TestResultsAdapter extends RecyclerView.Adapter<TestResultsAdapter.
                     ImageView statusIcon = itemView.findViewById(R.id.ivStatusIcon);
                     if (aBoolean) {
                         studentAnswer.setText("Верно");
-                        studentAnswer.setTextColor(context.getResources().getColor(R.color.green));
+                        studentAnswer.setTextColor(context.getResources().getColor(R.color.lightgreen));
                         statusIcon.setImageResource(R.drawable.complete);
                         correctAnswersCount++;
                     } else {

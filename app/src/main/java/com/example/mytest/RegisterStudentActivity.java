@@ -19,7 +19,7 @@ import com.example.mytest.model.Student;
 import com.example.mytest.repository.StudentRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class RegisterStudentActivity extends AppCompatActivity {
+public class RegisterStudentActivity extends BaseActivity {
 
     private EditText editTextFirstName, editTextLastName, editTextGroupNumber, editTextEmail, editTextPassword;
     private StudentRepository studentRepository;
@@ -93,6 +93,12 @@ public class RegisterStudentActivity extends AppCompatActivity {
             return false;
         }
 
+        // Проверка email на соответствие разрешённым доменам
+        if (!isValidEmailDomain(email)) {
+            Toast.makeText(this, "Email должен быть из разрешенных доменов", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (password.length() < 6) {
             Toast.makeText(this, "Пароль должен содержать минимум 6 символов", Toast.LENGTH_SHORT).show();
             return false;
@@ -108,8 +114,30 @@ public class RegisterStudentActivity extends AppCompatActivity {
             return false;
         }
 
+        if (!groupNumber.matches("\\d+")) {
+            Toast.makeText(this, "Номер группы должен содержать только цифры", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
+
+    // Метод проверки домена email
+    private boolean isValidEmailDomain(String email) {
+        String[] allowedDomains = {
+                "@mail.ru", "@gmail.com", "@yahoo.com", "@hotmail.com",
+                "@outlook.com", "@icloud.com", "@aol.com", "@yandex.ru",
+                "@zoho.com", "@tut.by", "@list.ru"
+        };
+
+        for (String domain : allowedDomains) {
+            if (email.endsWith(domain)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void togglePasswordVisibility() {
         Typeface currentTypeface = editTextPassword.getTypeface();

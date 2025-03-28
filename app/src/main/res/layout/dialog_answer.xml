@@ -4,20 +4,24 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/answer_background">
+    android:background="@drawable/edit_background">
 
-<EditText
-android:id="@+id/dialog_answer_editText"
-android:layout_width="0dp"
-android:layout_weight="3"
-android:layout_height="wrap_content"
-android:inputType="text" />
+    <EditText
+        android:textStyle="bold"
+        android:textColor="@color/black"
+    android:id="@+id/dialog_answer_editText"
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:layout_height="wrap_content"
+    android:inputType="text"
+        android:background="@android:color/transparent"
+        />
 
-<CheckBox
-android:id="@+id/dialog_answer_checkBox"
-android:layout_width="0dp"
-android:layout_weight="1"
-android:layout_height="wrap_content"
-android:text="верно" />
+    <CheckBox
+    android:id="@+id/dialog_answer_checkBox"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:text="верно" />
 
     </LinearLayout>

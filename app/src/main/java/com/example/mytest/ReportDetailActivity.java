@@ -2,6 +2,7 @@ package com.example.mytest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mytest.repository.ReportRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ReportDetailActivity extends AppCompatActivity {
+public class ReportDetailActivity extends BaseActivity {
     private TextView complaintTitle, testName, complaintText;
     private Button sendMessageAuthor, completeButton;
     private String studentId; // Студент, создавший тест
@@ -44,6 +45,12 @@ public class ReportDetailActivity extends AppCompatActivity {
         ReportRepository reportRepository = new ReportRepository(FirebaseFirestore.getInstance());
         reportRepository.deleteReport(reportId);
         Intent intent = new Intent(ReportDetailActivity.this, AdminProfile.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onBackReport(View view) {
+        Intent intent = new Intent(this, AllReportsActivity.class);
         startActivity(intent);
         finish();
     }

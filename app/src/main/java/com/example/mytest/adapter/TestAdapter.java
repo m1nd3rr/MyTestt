@@ -18,6 +18,7 @@ import com.example.mytest.PassingTestActivity;
 import com.example.mytest.R;
 import com.example.mytest.TestDetailActivity;
 import com.example.mytest.TestHistory;
+import com.example.mytest.TestsActivity;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.auth.Select;
 import com.example.mytest.model.Result;
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
-    private final List<Test> testList;
+    private List<Test> testList;
     private final List<Result> resultList;
     private final Context context;
     private final boolean isCompleteMode;
@@ -38,6 +39,10 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         this.context = context;
         this.isCompleteMode = isCompleteMode;
         this.resultList = resultList;
+    }
+    public void updateList(List<Test> newList) {
+        testList = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -86,9 +91,16 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             this.isCompleteMode = isCompleteMode;
         }
 
-        public void bind(Test test,Result result) {
+        public void bind(Test test, Result result) {
             number.setText(String.valueOf(getAdapterPosition() + 1));
             text.setText(test.getTitle());
+
+            // Проверяем, нужно ли скрывать иконку
+            if (context instanceof CompletedTestActivity || context instanceof TestsActivity) {
+                imageView.setVisibility(View.GONE);
+            } else {
+                imageView.setVisibility(View.VISIBLE);
+            }
 
             layout.setOnClickListener(view -> {
                 Intent intent;
@@ -111,11 +123,12 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
                     int position = getAdapterPosition();
                     adapter.removeTest(position);
                 });
-            } else {
-                imageView.setVisibility(View.GONE);
             }
         }
+
+
     }
+
 
     public void removeTest(int position) {
         testList.remove(position);

@@ -48,7 +48,7 @@ import android.Manifest;
 
 import java.util.ArrayList;
 
-public class StudentProfileActivity extends AppCompatActivity {
+public class StudentProfileActivity extends BaseActivity {
     private StudentRepository studentRepository;
     private RoomRepository roomRepository;
     private ResultRepository resultRepository;
@@ -138,7 +138,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         entries.add(new PieEntry(percentageIncorrect, ""));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(Color.WHITE, Color.LTGRAY);
+        dataSet.setColors(Color.parseColor("#1ED8A6"), Color.LTGRAY);
         dataSet.setValueTextSize(0f);
 
         PieData data = new PieData(dataSet);

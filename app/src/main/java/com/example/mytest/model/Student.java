@@ -18,6 +18,13 @@ public class Student {
         this.email = email;
         this.photo = photo;
     }
+    public Student(String firstName, String lastName, String groupNumber, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.groupNumber = groupNumber;
+        this.password = password;
+        this.email = email;
+    }
 
     public String getPhoto() {
         return photo;

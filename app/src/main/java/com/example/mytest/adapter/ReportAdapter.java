@@ -27,6 +27,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ComplaintV
         this.reportList = reportList;
         this.listener = listener;
     }
+    public void updateList(List<Report> newList) {
+        reportList = newList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override

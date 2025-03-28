@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_gravity="start"
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Назад"
+            android:onClick="onBackStudentAdd"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить студента"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:shadowColor="@android:color/darker_gray"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"/>
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/editTextFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Имя"
+        android:layout_marginBottom="20dp"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_edittext"
+        />
+
+    <EditText
+        android:id="@+id/editTextLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Фамилия"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/editTextGroupNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="№ группы"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:drawableEnd="@drawable/baseline_visibility_24"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"/>
+
+    <Button
+        android:id="@+id/buttonAddStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавить"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#3C599E"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

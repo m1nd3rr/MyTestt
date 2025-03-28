@@ -107,7 +107,7 @@ public class PassingAdapter extends RecyclerView.Adapter<PassingAdapter.PassingV
                 }
             }
         }
-        return null; // Если ничего не выбрано
+        return null;
     }
 
     static class PassingViewHolder extends RecyclerView.ViewHolder {
@@ -236,9 +236,6 @@ public class PassingAdapter extends RecyclerView.Adapter<PassingAdapter.PassingV
                     });
             }
         }
-
-
-
 
         private List<Integer> getSortNumbers() {
             List<Integer> sortNumbers = new ArrayList<>();

@@ -2,26 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="16dp"
-    android:background="#C8C5C5"
+    android:background="@drawable/background_question"
     android:layout_marginBottom="8dp"
+    android:layout_marginHorizontal="20dp"
     >
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-<TextView
-android:id="@+id/tvRoomCode"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Код комнаты"
-android:textSize="18sp"
-android:textStyle="bold"/>
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/tvRoomCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Код комнаты"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/tvTestName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Название теста"
+        android:textSize="16sp"
+        android:paddingTop="4dp"/>
 
-    <!-- Название теста -->
-<TextView
-android:id="@+id/tvTestName"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Название теста"
-android:textSize="16sp"
-android:paddingTop="4dp"/>
+</LinearLayout>
+    <ImageView
+
+        android:id="@+id/notificationIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center|end"
+        android:onClick="ClickDeleteTest"
+        android:src="@drawable/baseline_delete_24" />
+
+
+
     </LinearLayout>

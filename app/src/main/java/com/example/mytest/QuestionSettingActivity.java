@@ -11,7 +11,7 @@ import com.example.mytest.model.Question;
 import com.example.mytest.repository.QuestionRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class QuestionSettingActivity extends AppCompatActivity {
+public class QuestionSettingActivity extends BaseActivity {
 
     private Question question;
     private QuestionRepository questionRepository;

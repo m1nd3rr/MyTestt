@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_question"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_margin="10dp"
     android:padding="15dp"
     android:id="@+id/answer_item_list">
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/answer_title"
         android:layout_width="0dp"
         android:layout_weight="1"

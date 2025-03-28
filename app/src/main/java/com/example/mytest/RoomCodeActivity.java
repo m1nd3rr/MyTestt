@@ -1,6 +1,9 @@
 package com.example.mytest;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomCodeActivity extends AppCompatActivity {
+public class RoomCodeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private List<Result> resultList = new ArrayList<>();
@@ -35,7 +38,12 @@ public class RoomCodeActivity extends AppCompatActivity {
         // Инициализация текстовых полей
         TextView roomCodeTextView = findViewById(R.id.tvRoomCode);
         TextView testNameTextView = findViewById(R.id.testNameTextView);
-
+        ImageView imageView = findViewById(R.id.back);
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TeacherProfileActivity.class);
+            startActivity(intent);
+            finish();
+        });
         // Получение данных из Intent
         String roomCode = getIntent().getStringExtra("ROOM_CODE");
         String testName = getIntent().getStringExtra("TEST_NAME");
@@ -85,5 +93,4 @@ public class RoomCodeActivity extends AppCompatActivity {
             }
         });
     }
-
 }

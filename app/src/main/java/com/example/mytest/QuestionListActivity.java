@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionListActivity extends AppCompatActivity {
+public class QuestionListActivity extends BaseActivity {
     private QuestionStudentAdapter questionAdapter;
     private List<Question> questionList = new ArrayList<>();
     private QuestionRepository questionRepository;

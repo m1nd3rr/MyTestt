@@ -16,7 +16,7 @@ import com.example.mytest.auth.Select;
 import com.example.mytest.repository.QuestionRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class TestResultsActivity extends AppCompatActivity {
+public class TestResultsActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private TestResultsAdapter adapter;
     private QuestionRepository questionRepository;
@@ -49,7 +49,7 @@ public class TestResultsActivity extends AppCompatActivity {
         tvIncorrectAnswers.setText("Ошибки: " + incorrectCount);
     }
 
-    public void onBackButtonClickkk(View view) {
+    public void backbutton(View view) {
         Intent intent = new Intent(this, StudentProfileActivity.class);
         startActivity(intent);
         finish();

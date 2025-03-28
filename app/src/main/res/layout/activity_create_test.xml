@@ -10,7 +10,7 @@
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Назад"
@@ -20,16 +20,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tvSelectTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_rectangle"
         android:padding="10dp"
-        android:gravity="center"
         android:text="5 мин"
         android:textColor="@android:color/white"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:onClick="showTimePicker"
@@ -65,16 +63,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etTestTitle"
         app:layout_constraintVertical_bias="0.0" />
+
     <LinearLayout
         android:id="@+id/loyout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <Button
+            android:textStyle="bold"
             android:id="@+id/btnCreateQuestion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,6 +88,7 @@
             />
 
         <Button
+            android:textStyle="bold"
             android:id="@+id/btnPublishTest"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -99,6 +102,7 @@
 
 
         <Button
+            android:textStyle="bold"
             android:backgroundTint="#3C599E"
             android:id="@+id/btnCreateTest"
             android:layout_width="0dp"

@@ -1,104 +1,173 @@
 @startuml
 
-
-
-
-
-          class TestHistory {
-            + TestRepository testRepository
-            + ResultRepository resultRepository
-            + Test test
-            + QuestionRepository questionRepository
-            + RoomRepository roomRepository
-
-            + void onCreate(Bundle savedInstanceState)
-            + void onBackButtonClickk(View view)
-          }
-
-          class Authentication {
-            + static Student getStudent()
-            + static Teacher getTeacher()
-          }
-
-          class Student {
-            - String id
-            - String firstName
-            - String lastName
-            - String groupNumber
-            - String password
-            - String email
-            - String profilePicture
-
-            + Student(String id, String firstName, String lastName, String groupNumber, String password, String email, String profilePicture)
-            + String getId()
-          }
-
-         
-
-          class ResultRepository {
-            + ResultRepository(FirebaseFirestore db)
-            + CompletableFuture<List<Result>> getAllResultByStudentId(String studentId)
-          }
-
-          class TestRepository {
-            + TestRepository(FirebaseFirestore db)
-            + CompletableFuture<List<Test>> getAllTestByResult(List<Result> result)
-            + CompletableFuture<List<Test>> getAllTestByStudentId(String studentId)
-            + CompletableFuture<List<Test>> getAllTestByTeacherId(String teacherId)
-          }
-
-          class QuestionRepository {
-            + QuestionRepository(FirebaseFirestore db)
-          }
-
-          class RoomRepository {
-            + RoomRepository(FirebaseFirestore db)
-          }
-
-          class FirebaseFirestore {
-            + static FirebaseFirestore getInstance()
-          }
-
-          class TestAdapter {
-            + TestAdapter(List<Test> testList, Context context)
-          }
-
-          class Test {
-            - String id
-            - String title
-            - String description
-
-            + Test(String id, String title, String description)
-            + String getId()
-          }
-
-          class Result {
-            - String id
-            - String studentId
-            - String testId
-
-            + Result(String id, String studentId, String testId)
-            + String getTestId()
-          }
-
-          TestHistory "1" -right-> "1" Authentication
-          TestHistory "1" -right-> "1" ResultRepository
-          TestHistory "1" -right-> "1" TestRepository
-          TestHistory "1" -down-> "1" QuestionRepository
-          TestHistory "1" -down-> "1" RoomRepository
-          ResultRepository "1" -down-> "1" FirebaseFirestore
-          TestRepository "1" -down-> "1" FirebaseFirestore
-          QuestionRepository "1" -down-> "1" FirebaseFirestore
-          RoomRepository "1" -down-> "1" FirebaseFirestore
-          TestHistory "1" -down-> "1" RecyclerView
-          RecyclerView "1" -down-> "1" TestAdapter
-          TestAdapter "1" -down-> "1" Test
-          Result "1" -down-> "1" Student
-          Result "1" -down-> "1" Test
-
-
-
+' Классы моделей
+class Test {
+    - String id
+    - String title
+    - String teacherId
+    - String studentId
+    - Integer duration
+    + getId()
+    + setId()
+    + getTitle()
+    + setTitle()
+    + getTeacherId()
+    + setTeacherId()
+    + getStudentId()
+    + setStudentId()
+    + getDuration()
+    + setDuration()
 }
 
+class Question {
+    - String id
+    - String testId
+    - String title
+    - String type
+    + getId()
+    + setId()
+    + getTestId()
+    + setTestId()
+    + getTitle()
+    + setTitle()
+    + getType()
+    + setType()
+}
+
+class Answer {
+    - String id
+    - String questionId
+    - String content
+    - boolean correct
+    - Integer sortNumber
+    - String text
+    + getId()
+    + setId()
+    + getQuestionId()
+    + setQuestionId()
+    + getContent()
+    + setContent()
+    + isCorrect()
+    + setCorrect()
+    + getSortNumber()
+    + setSortNumber()
+    + getText()
+    + setText()
+}
+
+class Result {
+    - String testId
+    - String studentId
+    - Integer score
+    + getTestId()
+    + setTestId()
+    + getStudentId()
+    + setStudentId()
+    + getScore()
+    + setScore()
+}
+
+class Room {
+    - String id
+    - String testId
+    - String testName
+    - String roomNumber
+    + getId()
+    + setId()
+    + getTestId()
+    + setTestId()
+    + getTestName()
+    + setTestName()
+    + getRoomNumber()
+    + setRoomNumber()
+}
+
+' Классы репозиториев
+class TestRepository {
+    - CollectionReference testCollection
+    - FirebaseFirestore db
+    + TestRepository(db)
+    + deleteTest(test)
+    + addTest(test)
+    + deleteTestById(testId)
+    + updateTest(test)
+    + getAllTest()
+    + getAllTestByTeacherId(id)
+    + getAllTestByStudentId(id)
+    + getAllStudentTest()
+    + getById(testId)
+    + getAllTestByResult(results)
+}
+
+class QuestionRepository {
+    - CollectionReference questionCollection
+    + QuestionRepository(db)
+    + addQuestion(question)
+    + deleteQuestion(question)
+    + updateQuestion(question)
+    + getAllQuestion()
+    + getCompletedTests(studentId)
+    + getAllQuestionByTestId(id)
+}
+
+class AnswerRepository {
+    - CollectionReference answerCollection
+    + AnswerRepository(db)
+    + addAnswer(answer)
+    + deleteAnswer(answer)
+    + updateAnswer(answer)
+    + getAllAnswer()
+    + getAllAnswerById(id)
+    + getCorrectAnswerByQuestionId(questionId)
+    + checkCorrectAnswer(id)
+}
+
+class RoomRepository {
+    - CollectionReference roomCollection
+    + RoomRepository(db)
+    + addRoom(room)
+    + deleteRoom(room)
+    + getAllRooms()
+}
+
+' Классы адаптеров
+class TestAdapter {
+    - List<Test> testList
+    - List<Result> resultList
+    - Context context
+    - boolean isCompleteMode
+    + TestAdapter(testList, resultList, context, isCompleteMode)
+    + updateList(newList)
+    + removeTest(position)
+}
+
+class QuestionAdapter {
+    - List<Question> questionList
+    - Context context
+    - boolean isCompleteMode
+    + QuestionAdapter(questionList, context, isCompleteMode)
+}
+
+class AnswerAdapter {
+    - List<Answer> answerList
+    - Context context
+    - Question question
+    + AnswerAdapter(answerList, context, question)
+}
+
+' Связи между классами
+Test "1" *-- "0..*" Question : contains
+Question "1" *-- "0..*" Answer : contains
+Test "1" *-- "0..*" Result : has results
+Test "1" *-- "0..*" Room : has rooms
+
+TestRepository --> Test : manages
+QuestionRepository --> Question : manages
+AnswerRepository --> Answer : manages
+RoomRepository --> Room : manages
+
+TestAdapter --> Test : adapts
+QuestionAdapter --> Question : adapts
+AnswerAdapter --> Answer : adapts
 
 @enduml

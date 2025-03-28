@@ -20,7 +20,7 @@ import com.example.mytest.model.Teacher;
 import com.example.mytest.repository.TeacherRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class RegisterTeacherActivity extends AppCompatActivity {
+public class RegisterTeacherActivity extends BaseActivity {
 
     private EditText editTextTeacherFirstName, editTextTeacherLastName, editTextEmail, editTextPassword;
     private TeacherRepository teacherRepository;
@@ -90,6 +90,12 @@ public class RegisterTeacherActivity extends AppCompatActivity {
             return false;
         }
 
+        // Проверка email на соответствие разрешённым доменам
+        if (!isValidEmailDomain(email)) {
+            Toast.makeText(this, "Email должен быть из разрешенных доменов", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (password.length() < 6) {
             Toast.makeText(this, "Пароль должен содержать минимум 6 символов", Toast.LENGTH_SHORT).show();
             return false;
@@ -107,6 +113,23 @@ public class RegisterTeacherActivity extends AppCompatActivity {
 
         return true;
     }
+
+    // Метод проверки домена email
+    private boolean isValidEmailDomain(String email) {
+        String[] allowedDomains = {
+                "@mail.ru", "@gmail.com", "@yahoo.com", "@hotmail.com",
+                "@outlook.com", "@icloud.com", "@aol.com", "@yandex.ru",
+                "@zoho.com", "@tut.by", "@list.ru"
+        };
+
+        for (String domain : allowedDomains) {
+            if (email.endsWith(domain)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void togglePasswordVisibility() {
         int selection = editTextPassword.getSelectionEnd();

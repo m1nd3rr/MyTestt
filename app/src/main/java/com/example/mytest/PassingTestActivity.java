@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PassingTestActivity extends AppCompatActivity {
+public class PassingTestActivity extends BaseActivity {
     QuestionRepository questionRepository;
     List<Question> questionList = new ArrayList<>();
     List<Answer> answerList = new ArrayList<>();
@@ -54,7 +53,7 @@ public class PassingTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_passing_test);
         tvTimer = findViewById(R.id.tvTimer);
         tvQuestionCount = findViewById(R.id.tvQuestionCount);
-        totalQuestions = questionList.size(); // Получите список вопросов
+        totalQuestions = questionList.size();
 
 
         int durationMinutes = Select.test.getDuration() != null ? Select.test.getDuration() : 0;
@@ -81,10 +80,10 @@ public class PassingTestActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (isFinishing()) return; // Если активность завершена, ничего не делаем
-        isTestInterrupted = true; // Устанавливаем флаг, что тест прерван
+        if (isFinishing()) return;
+        isTestInterrupted = true;
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // Остановка таймера
+            countDownTimer.cancel();
         }
     }
 
@@ -92,7 +91,7 @@ public class PassingTestActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (isTestInterrupted) {
-            showTestInterruptedDialog(); // Показываем ошибку
+            showTestInterruptedDialog();
         }
     }
 
@@ -112,7 +111,7 @@ public class PassingTestActivity extends AppCompatActivity {
     private void startTimer(long durationMillis) {
         if (durationMillis <= 0) {
             tvTimer.setText("∞");
-            return; // Не запускаем таймер
+            return;
         }
 
         countDownTimer = new CountDownTimer(durationMillis, 1000) {
@@ -135,22 +134,19 @@ public class PassingTestActivity extends AppCompatActivity {
             String questionCountText = (i + 1) + "/" + questionList.size();
             tvQuestionCount.setText(questionCountText);
         } else {
-            tvQuestionCount.setText("0/0"); // На случай, если список пуст
+            tvQuestionCount.setText("0/0");
         }
     }
 
 
     private void endTest() {
-        // Остановка таймера
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
 
         int totalQuestions = questionList.size();
         int wrongAnswers = totalQuestions - rightAnswer;
-        // Подсчёт результатов
 
-// Отображение результатов в диалоговом окне
         showResultsDialog(rightAnswer, wrongAnswers);
     }
 
@@ -199,7 +195,6 @@ public class PassingTestActivity extends AppCompatActivity {
     public void nextQuestion(View view) {
         boolean result = false;
 
-        // Проверка типа вопроса
         if (!questionList.get(i).getType().equals("text")) {
             result = passingAdapter.getPassingResult();
         } else {
@@ -210,24 +205,18 @@ public class PassingTestActivity extends AppCompatActivity {
                 }
             }
         }
-
-        // Увеличение счётчика правильных ответов
         if (result) {
             rightAnswer++;
         }
-
-        // Обновление результатов студента
         resultAll.getStudentAnswers().put(questionList.get(i).getId(), result);
         ResultRepository resultRepository = new ResultRepository(FirebaseFirestore.getInstance());
         resultRepository.updateResult(resultAll);
 
-        // Переход к следующему вопросу или завершение теста
         if (i < questionList.size() - 1) {
             i++;
-            updateQuestionCount(); // Обновление отображения счётчика вопросов
+            updateQuestionCount();
             startPassing();
         } else {
-            // Завершение теста
             totalQuestions = questionList.size();
             int wrongAnswers = totalQuestions - rightAnswer;
             showResultsDialog(rightAnswer, wrongAnswers);

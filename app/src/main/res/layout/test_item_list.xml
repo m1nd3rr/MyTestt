@@ -7,31 +7,40 @@
     android:layout_margin="10dp"
     android:padding="15dp"
     android:id="@+id/test_item_list">
-
-    <ImageView
-        android:id="@+id/notificationIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="end"
-        android:onClick="ClickDeleteTest"
-        android:src="@drawable/baseline_delete_24"
-        />
-
-    <TextView
-        android:id="@+id/test_number"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/background_number"
-        android:layout_margin="8dp"
-        android:gravity="center">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/test_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="название теста"
-        android:paddingHorizontal="10dp" />
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/test_number"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/background_number"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:elevation="10dp"
+            />
+        <TextView
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:id="@+id/test_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="название теста"
+            android:paddingHorizontal="10dp" />
+        <ImageView
+            android:id="@+id/notificationIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center|end"
+            android:onClick="ClickDeleteTest"
+            android:src="@drawable/baseline_delete_24" />
+    </LinearLayout>
 
 </LinearLayout>

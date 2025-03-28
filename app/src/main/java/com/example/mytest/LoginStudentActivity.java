@@ -18,7 +18,7 @@ import com.example.mytest.auth.Authentication;
 import com.example.mytest.repository.StudentRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginStudentActivity extends AppCompatActivity {
+public class LoginStudentActivity extends BaseActivity {
 
     private EditText editTextEmail, editTextPassword;
     private StudentRepository studentRepository;

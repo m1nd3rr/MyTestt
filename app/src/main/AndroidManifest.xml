@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -78,18 +78,36 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".CreateTestActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RoomCodeActivity" />
-        <activity android:name=".RoomHistoryActivity"/>
-        <activity android:name=".CompletedTestActivity" />
-        <activity android:name=".TestResultsActivity" />
-        <activity android:name=".AllTeacherActivity" />
-        <activity android:name=".AllTestsActivity" />
-        <activity android:name=".TestDetailActivity" />
-        <activity android:name=".QuestionListActivity" />
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".AllReportsActivity" />
-        <activity android:name=".ReportDetailActivity" />
-        <activity android:name=".MessagesActivity" />
+        <activity android:name=".RoomCodeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RoomHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CompletedTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TestResultsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AllTeacherActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AllTestsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TestDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QuestionListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ReportActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AllReportsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ReportDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditStudentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditTeacherActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddStudentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddTeacherActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

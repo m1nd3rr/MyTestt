@@ -6,6 +6,8 @@
     android:background="#F5F5F5">
 
     <EditText
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/dialog_answer_editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

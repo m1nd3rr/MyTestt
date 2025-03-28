@@ -15,7 +15,7 @@ import com.example.mytest.repository.TeacherRepository;
 import com.example.mytest.repository.TestRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AdminProfile extends AppCompatActivity {
+public class AdminProfile extends BaseActivity {
     private AdminRepository adminRepository;
     private StudentRepository studentRepository;
     private TeacherRepository teacherRepository;
@@ -106,25 +106,30 @@ public class AdminProfile extends AppCompatActivity {
     public void openAllStudents(View view) {
         Intent intent = new Intent(this, AllStudentsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openAllTeachers(View view) {
         Intent intent = new Intent(this, AllTeacherActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openAllTests(View view) {
         Intent intent = new Intent(this, AllTestsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onBack(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void AllReports(View view) {
         Intent intent = new Intent(this, AllReportsActivity.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -1,7 +1,9 @@
 package com.example.mytest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class RoomHistoryActivity extends AppCompatActivity {
+public class RoomHistoryActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private RoomHistoryAdapter roomHistoryAdapter;
@@ -66,5 +68,11 @@ public class RoomHistoryActivity extends AppCompatActivity {
         } else {
             Toast.makeText(RoomHistoryActivity.this, "Преподаватель не авторизован.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void backk(View view) {
+        Intent intent = new Intent(this, TeacherProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

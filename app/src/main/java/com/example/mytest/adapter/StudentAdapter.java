@@ -1,5 +1,8 @@
 package com.example.mytest.adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mytest.AllStudentsActivity;
+import com.example.mytest.EditStudentActivity;
 import com.example.mytest.R;
+import com.example.mytest.model.Report;
 import com.example.mytest.model.Student;
 
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
-    private final List<Student> studentList;
+    private List<Student> studentList;
     private final OnDeleteClickListener deleteClickListener;
 
     public interface OnDeleteClickListener {
@@ -25,6 +31,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public StudentAdapter(List<Student> studentList, OnDeleteClickListener deleteClickListener) {
         this.studentList = studentList;
         this.deleteClickListener = deleteClickListener;
+    }
+    public void updateList(List<Student> newList) {
+        studentList = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,7 +52,23 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.groupNumber.setText("Группа: " + student.getGroupNumber());
 
         holder.deleteButton.setOnClickListener(v -> deleteClickListener.onDeleteClick(student));
+
+        holder.editButton.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, EditStudentActivity.class);
+            intent.putExtra("student_id", student.getId());
+            intent.putExtra("first_name", student.getFirstName());
+            intent.putExtra("last_name", student.getLastName());
+            intent.putExtra("email", student.getEmail());
+            intent.putExtra("password", student.getPassword());
+            intent.putExtra("group_number", student.getGroupNumber());
+            intent.putExtra("photo", student.getPhoto());
+
+                context.startActivity(intent);
+        });
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -59,7 +85,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     static class StudentViewHolder extends RecyclerView.ViewHolder {
         TextView firstName, lastName, groupNumber;
-        Button deleteButton;
+        Button deleteButton, editButton;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +93,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             lastName = itemView.findViewById(R.id.last_name);
             groupNumber = itemView.findViewById(R.id.group_number);
             deleteButton = itemView.findViewById(R.id.delete_button);
+            editButton = itemView.findViewById(R.id.edit_button);
         }
     }
 }

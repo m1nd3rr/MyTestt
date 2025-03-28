@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_question"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_margin="10dp"
     android:padding="15dp"
-    android:id="@+id/question_item">
+    android:id="@+id/question_item"
+    >
 
     <ImageView
         android:id="@+id/notificationIcon"
@@ -19,6 +20,8 @@
         />
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/question_number"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -30,6 +33,10 @@
 
 
     <TextView
+        android:textSize="17dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:id="@+id/question_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

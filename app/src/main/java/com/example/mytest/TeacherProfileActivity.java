@@ -45,7 +45,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherProfileActivity extends AppCompatActivity {
+public class TeacherProfileActivity extends BaseActivity {
 
     TestRepository testRepository;
     private TeacherRepository teacherRepository;
@@ -252,6 +252,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     public void ClickOnRoomHistory(View view) {
         Intent intent = new Intent(this, RoomHistoryActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onBack(View view) {

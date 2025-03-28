@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompletedTestActivity extends AppCompatActivity {
+public class CompletedTestActivity extends BaseActivity {
     private QuestionRepository questionRepository;
     private QuestionAdapter questionAdapter;
     private List<Question> questionList = new ArrayList<>();
@@ -58,6 +58,8 @@ public class CompletedTestActivity extends AppCompatActivity {
     public void ClickOnRoom(View view) {
         Intent intent = new Intent(this, TestResultsActivity.class);
         startActivity(intent);
+        finish();
+
     }
     }
 

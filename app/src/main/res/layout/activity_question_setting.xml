@@ -11,26 +11,27 @@
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="1dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Назад"
         android:onClick="onBack"
         android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="8dp" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/textViewChooseType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выберите тип вопроса:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonBack"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/gridLayoutQuestionTypes" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp" />
 
     <GridLayout
         android:id="@+id/gridLayoutQuestionTypes"
@@ -53,7 +54,7 @@
             android:gravity="bottom|center"
             android:text="Одиночный выбор"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:drawableTop="@drawable/choose"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
@@ -68,7 +69,7 @@
             android:gravity="bottom|center"
             android:text="Множественный выбор"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:drawableTop="@drawable/multi_choice"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
@@ -85,7 +86,7 @@
             android:gravity="bottom|center"
             android:text="Сортировка"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:drawableTop="@drawable/sorting"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"/>
@@ -100,7 +101,7 @@
             android:gravity="bottom|center"
             android:text="Текстовый ответ"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:drawableTop="@drawable/edit_text"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"/>
@@ -115,7 +116,7 @@
             android:gravity="bottom|center"
             android:text="Да или нет"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:drawableTop="@drawable/photo"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"/>
@@ -131,7 +132,7 @@
             android:text="Сопоставление"
             android:drawableTop="@drawable/connect"
             app:cornerRadius="15dp"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"/>
 

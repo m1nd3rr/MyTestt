@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends BaseActivity {
     List<Answer> answerList = new ArrayList<>();
     Question question;
     AnswerAdapter answerAdapter;
@@ -64,8 +64,9 @@ public class QuestionActivity extends AppCompatActivity {
                     recyclerView.setAdapter(answerAdapter);
 
                     if (question.getType().equals("true-false") && list.isEmpty()) {
-                        Answer answer = new Answer(null,"TRUE",false,question.getId(),-1, null);
-                        Answer answer2 = new Answer(null,"FALSE",false,question.getId(),-1, null);
+                        Answer answer = new Answer(null,"Правда",false,question.getId(),-1, null);
+                        Answer answer2 = new Answer(null,"Ложь",false,question.getId(),-1, null);
+
                         answerList.add(answerRepository.addAnswer(answer));
                         answerList.add(answerRepository.addAnswer(answer2));
                         answerAdapter.notifyItemInserted(answerList.size());
@@ -83,6 +84,13 @@ public class QuestionActivity extends AppCompatActivity {
                 .setPositiveButton("Создать", (dialog1, which) -> {
                     EditText editText = dialogView.findViewById(R.id.dialog_answer_editText);
                     CheckBox checkBox = dialogView.findViewById(R.id.dialog_answer_checkBox);
+
+                    String answerText = editText.getText().toString().trim();
+                    if (answerText.isEmpty()) {
+                        Toast.makeText(this, "Ответ не может быть пустым!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     answerRepository.checkCorrectAnswer(question.getId())
                             .thenAccept(correct -> {
                                 if (correct || !checkBox.isChecked()) {
@@ -133,6 +141,13 @@ public class QuestionActivity extends AppCompatActivity {
                     CheckBox checkBox = dialogView.findViewById(R.id.dialog_answer_checkBox);
 
                     Answer answer = new Answer(null, editText.getText().toString(), checkBox.isChecked(), question.getId(), -1, null);
+
+                    String answerText = editText.getText().toString().trim();
+                    if (answerText.isEmpty()) {
+                        Toast.makeText(this, "Ответ не может быть пустым!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     answerList.add(answerRepository.addAnswer(answer));
                     answerAdapter.notifyItemInserted(answerList.size());
                 })
@@ -163,6 +178,13 @@ public class QuestionActivity extends AppCompatActivity {
                     EditText editText = dialogView.findViewById(R.id.dialog_answer_editText);
 
                     Answer answer = new Answer(null,editText.getText().toString(),true, question.getId(), (Integer) spinner.getSelectedItem(), null);
+
+                    String answerText = editText.getText().toString().trim();
+                    if (answerText.isEmpty()) {
+                        Toast.makeText(this, "Ответ не может быть пустым!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     answerList.add(answerRepository.addAnswer(answer));
                     answerAdapter.notifyItemInserted(answerList.size());
                 })
@@ -171,10 +193,10 @@ public class QuestionActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private List<Integer> getSortNumbers() {
+    private List<Integer> getSortNumbers(){
         List<Integer> sortNumbers = new ArrayList<>();
         for (int i = 1; i <= answerList.size() + 1; i++) {
-            sortNumbers.add(i);
+           sortNumbers.add(i);
         }
         return sortNumbers;
     }
@@ -190,6 +212,7 @@ public class QuestionActivity extends AppCompatActivity {
                     EditText editText = dialogView.findViewById(R.id.dialog_answer_editText);
 
                     Answer answer = new Answer(null,editText.getText().toString(),true,question.getId(),-1, null);
+
                     answerList.add(answerRepository.addAnswer(answer));
                     answerAdapter.notifyItemInserted(answerList.size());
                 })
@@ -212,6 +235,13 @@ public class QuestionActivity extends AppCompatActivity {
                     EditText editText1 = dialogView.findViewById(R.id.dialog_answer_editText2);
 
                     Answer answer = new Answer(null,editText.getText().toString(),true,question.getId(),-1,editText1.getText().toString());
+
+                    String answerText = editText.getText().toString().trim();
+                    if (answerText.isEmpty()) {
+                        Toast.makeText(this, "Ответ не может быть пустым!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     answerList.add(answerRepository.addAnswer(answer));
                     answerAdapter.notifyItemInserted(answerList.size());
                 })
@@ -220,11 +250,7 @@ public class QuestionActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    public void onBackButton(View view) {
-        Intent intent = new Intent(QuestionActivity.this, CreateTestActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 
     public void ClickOnCreateQuestion(View view) {
         String updatedTitle = editText.getText().toString().trim();
@@ -232,7 +258,7 @@ public class QuestionActivity extends AppCompatActivity {
             editText.setError("Заголовок не может быть пустым");
             return;
         }
-        if (answerList.size() < 2) {
+        if (!question.getType().equals("text") && answerList.size() < 2) {
             Toast.makeText(this, "Вопрос должен содержать минимум 2 ответа.", Toast.LENGTH_SHORT).show();
             return;
         }

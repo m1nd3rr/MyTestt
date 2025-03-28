@@ -4,16 +4,33 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
-
-    <TextView
-        android:id="@+id/complaint_title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Жалоба на тест"
-        android:textSize="18sp"
-        android:textColor="#000"
-        android:layout_marginBottom="10dp"
-        android:gravity="center" />
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_gravity="center"
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Назад"
+            android:onClick="onBackReport"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:id="@+id/complaint_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Жалоба на тест"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:gravity="center" />
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/test_item_list"
@@ -44,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="название теста"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:paddingHorizontal="10dp" />
     </LinearLayout>
 
@@ -68,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="Решено"
             android:textColor="@android:color/white"
-            android:backgroundTint="#3C599E"
+            android:backgroundTint="#4BA4F2"
             android:layout_marginStart="8dp"/>
 </LinearLayout>
     </LinearLayout>

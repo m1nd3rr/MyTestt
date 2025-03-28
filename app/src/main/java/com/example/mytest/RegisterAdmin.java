@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.model.Admin;
 
-public class RegisterAdmin extends AppCompatActivity {
+public class RegisterAdmin extends BaseActivity {
 
     private EditText loginAdmin, passwordAdmin;
 

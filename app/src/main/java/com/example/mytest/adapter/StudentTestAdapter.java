@@ -1,59 +1,58 @@
 package com.example.mytest.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mytest.R;
+import com.example.mytest.TestDetailActivity;
 import com.example.mytest.model.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentTestAdapter extends RecyclerView.Adapter<StudentTestAdapter.ItemTestsViewHolder> {
-    private List<Test> tests;
+public class StudentTestAdapter extends RecyclerView.Adapter<StudentTestAdapter.TestViewHolder> {
+    private List<Test> testList;
     private Context context;
 
-    // Конструктор адаптера
-    public StudentTestAdapter(List<Test> tests, Context context) {
-        this.tests = tests != null ? tests : new ArrayList<>();
+    public StudentTestAdapter(List<Test> testList, Context context) {
+        this.testList = testList;
         this.context = context;
     }
 
     @Override
-    public ItemTestsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Убедитесь, что контекст не null
-        if (context == null) {
-            throw new IllegalStateException("Context is null");
-        }
+    public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tests, parent, false);
-        return new ItemTestsViewHolder(view);
+        return new TestViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ItemTestsViewHolder holder, int position) {
-        // Получаем тест
-        Test test = tests.get(position);
+    public void onBindViewHolder(TestViewHolder holder, int position) {
+        Test test = testList.get(position);
         holder.testTitle.setText(test.getTitle());
-        // Устанавливаем название теста
-        // Можно добавить дополнительные данные, если они есть, например, автор, количество вопросов и т.д.
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, TestDetailActivity.class);
+            intent.putExtra("test_id", test.getId()); // Передаем ID выбранного теста
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return tests.size();  // Количество тестов в списке
+        return testList.size();
     }
 
-    // ViewHolder для item_tests
-    public class ItemTestsViewHolder extends RecyclerView.ViewHolder {
+    public class TestViewHolder extends RecyclerView.ViewHolder {
         TextView testTitle;
-        TextView questionCount;
 
-        public ItemTestsViewHolder(View itemView) {
+        public TestViewHolder(View itemView) {
             super(itemView);
             testTitle = itemView.findViewById(R.id.test_title);
         }

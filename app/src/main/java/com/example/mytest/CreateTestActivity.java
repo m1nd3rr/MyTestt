@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mytest.adapter.AnswerAdapter;
 import com.example.mytest.adapter.QuestionAdapter;
 import com.example.mytest.auth.Authentication;
 import com.example.mytest.auth.Select;
@@ -24,14 +23,12 @@ import com.example.mytest.model.Test;
 import com.example.mytest.repository.QuestionRepository;
 import com.example.mytest.repository.RoomRepository;
 import com.example.mytest.repository.TestRepository;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class CreateTestActivity extends AppCompatActivity {
+public class CreateTestActivity extends BaseActivity {
 
     QuestionRepository questionRepository;
     RoomRepository roomRepository;
@@ -48,7 +45,7 @@ public class CreateTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_test);
         test = Select.getTest();
         if (test.getDuration() == null) {
-            test.setDuration(null); // Установка бесконечного времени по умолчанию
+            test.setDuration(null);
         }
         boolean isCompleteMode = getIntent().getBooleanExtra("isCompleteMode", false);
         tvSelectTime = findViewById(R.id.tvSelectTime);
@@ -114,18 +111,28 @@ public class CreateTestActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnCreateTest).setOnClickListener(view -> {
+            String testTitle = editText.getText().toString().trim();
+
+            if (testTitle.isEmpty()) {
+                Toast.makeText(this, "Введите название теста.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (questionList.isEmpty()) {
                 Toast.makeText(this, "Нельзя создать тест без вопросов.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            test.setTitle(editText.getText().toString());
+
+            test.setTitle(testTitle);
             testRepository.updateTest(test);
 
             Intent intentProfile;
             if (Authentication.student != null) {
                 intentProfile = new Intent(this, StudentProfileActivity.class);
-            } else {
+            } else if (Authentication.teacher != null) {
                 intentProfile = new Intent(this, TeacherProfileActivity.class);
+            } else { // Если ни студент, ни преподаватель, значит админ
+                intentProfile = new Intent(this, AdminProfile.class);
             }
             startActivity(intentProfile);
             finish();
@@ -134,7 +141,7 @@ public class CreateTestActivity extends AppCompatActivity {
 
     public void showTimePicker(View view) {
         final String[] timeOptions = {"∞", "5 минут", "10 минут", "15 минут", "20 минут", "30 минут", "45 минут"};
-        final Integer[] timeValues = {null, 5, 10, 15, 20, 30, 45}; // null означает бесконечность
+        final Integer[] timeValues = {null, 5, 10, 15, 20, 30, 45};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Выберите время")
@@ -145,7 +152,7 @@ public class CreateTestActivity extends AppCompatActivity {
                     } else {
                         tvSelectTime.setText(timeOptions[which]);
                     }
-                    test.setDuration(selectedValue); // null для бесконечности
+                    test.setDuration(selectedValue);
                     testRepository.updateTest(test);
                 });
         builder.create().show();
@@ -153,25 +160,31 @@ public class CreateTestActivity extends AppCompatActivity {
 
 
     public void onBackButtonClick(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Внимание")
-                .setMessage("Если вы выйдете, то данные теста будут удалены. Вы уверены?")
-                .setPositiveButton("Выйти", (dialog, which) -> {
-                    testRepository.deleteTestById(test.getId());
-                    Intent intentProfile;
-                    if (Authentication.student != null) {
-                        intentProfile = new Intent(this, StudentProfileActivity.class);
-                    } else {
-                        intentProfile = new Intent(this, TeacherProfileActivity.class);
-                    }
-                    startActivity(intentProfile);
-                    finish();
-                })
-                .setNegativeButton("Продолжить", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .show();
+        if (Authentication.admin != null) {
+            // Если админ, то просто переходим в профиль
+            Intent intentProfile = new Intent(this, AdminProfile.class);
+            startActivity(intentProfile);
+            finish();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Внимание")
+                    .setMessage("Если вы выйдете не нажав кнопку 'Обновить тест', то данные теста будут удалены. Вы уверены?")
+                    .setPositiveButton("Выйти", (dialog, which) -> {
+                        testRepository.deleteTestById(test.getId());
+                        Intent intentProfile;
+                        if (Authentication.student != null) {
+                            intentProfile = new Intent(this, StudentProfileActivity.class);
+                        } else {
+                            intentProfile = new Intent(this, TeacherProfileActivity.class);
+                        }
+                        startActivity(intentProfile);
+                        finish();
+                    })
+                    .setNegativeButton("Продолжить", (dialog, which) -> dialog.dismiss())
+                    .show();
+        }
     }
+
 
 
 
@@ -200,6 +213,7 @@ public class CreateTestActivity extends AppCompatActivity {
         intent.putExtra("ROOM_CODE", room.getRoomNumber());
         intent.putExtra("TEST_NAME", room.getTestName());
         startActivity(intent);
+        finish();
     }
 
 

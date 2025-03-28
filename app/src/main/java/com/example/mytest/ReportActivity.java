@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
-public class ReportActivity extends AppCompatActivity {
+public class ReportActivity extends BaseActivity {
     private EditText commentEditText, topicEditText;
     private Button submitButton;
     private ReportRepository reportRepository;

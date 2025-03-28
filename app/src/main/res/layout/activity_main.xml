@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="333dp"
-        android:layout_height="495dp"
+        android:layout_height="400dp"
         android:background="@drawable/semi_transparent_blue"
         android:orientation="vertical"
         android:padding="24dp"
@@ -30,7 +30,7 @@
             android:layout_marginBottom="16dp"
             android:gravity="center"
             android:text="Хотите войти как "
-            android:textColor="@android:color/white"
+            android:backgroundTint="#4BA4F2"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center"/>
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#3C599E"
-            android:text="как учащийся"
+            android:text="Учащийся"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:padding="16dp"
@@ -53,7 +53,7 @@
             android:layout_marginTop="12dp"
             android:backgroundTint="#3C599E"
             android:padding="16dp"
-            android:text="как преподаватель"
+            android:text="Преподаватель"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -62,7 +62,7 @@
             android:layout_width="66dp"
             android:layout_height="63dp"
             android:layout_marginStart="220dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="100dp"
             android:background="@drawable/baseline_admin_panel_settings_24"
             android:padding="16dp"
             android:text="как преподаватель"
